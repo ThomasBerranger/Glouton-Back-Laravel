@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProductRequest extends FormRequest
@@ -23,7 +24,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'code' => 'required|integer|min:0|unique:products',
+            'code' => 'required|integer|min:0|unique:'.Product::class,
             'user_id' => 'required|integer|min:0',
             'expiration_dates' => 'array',
             'description' => 'string',
