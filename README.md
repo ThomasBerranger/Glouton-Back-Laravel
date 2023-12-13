@@ -1,12 +1,12 @@
 ## Glouton API
 
-### Project Setup
+### Dependencies installation
 
 ```sh
 composer install
 ```
 
-### Compile and Hot-Reload for Development
+### Start Laravel local development server
 
 ```sh
 php artisan serve

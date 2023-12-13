@@ -9,12 +9,15 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        return ProductResource::collection(Product::all());
+        $user = Auth::user();
+
+        return ProductResource::collection($user->products()->get());
     }
 
     /**
