@@ -27,5 +27,8 @@ Route::controller(AuthenticatedSessionController::class)->group(function () {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/products/{product}', [ProductController::class, 'show']);
     Route::get('/products', [ProductController::class, 'index']);
+    Route::post('/products', [ProductController::class, 'store']);
+    Route::delete('/products/{product}', [ProductController::class, 'destroy']);
 });

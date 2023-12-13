@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Product\Filter;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
@@ -10,12 +11,24 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Spatie\FlareClient\Http\Exceptions\NotFound;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductController extends Controller
 {
-    public function index(): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
         $user = Auth::user();
+
+
+        if ($request->has('filter')) {
+            if ($request->get('filter')['expiration_date'] === Filter::WEEK->value) {
+                return ProductResource::collection($user->products()->get()->where('id', 1));
+            }
+
+            dd($request->get('filter'));
+        }
+
 
         return ProductResource::collection($user->products()->get());
     }
@@ -32,9 +45,12 @@ class ProductController extends Controller
 
     /**
      * Display the specified resource.
+     * @throws \Throwable
      */
-    public function show(Product $product): ProductResource
+    public function show(Request $request, Product $product): ProductResource
     {
+        throw_if($product->user()->first()->id !== Auth::user()->id, NotFoundHttpException::class);
+
         return ProductResource::make($product);
     }
 

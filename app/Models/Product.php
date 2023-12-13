@@ -26,6 +26,10 @@ class Product extends Model
         'added_to_purchase_list_at',
     ];
 
+    protected $casts = [
+        'expiration_dates' => 'array'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
