@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name', 255);
             $table->bigInteger('code', unsigned: true);
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->json('expiration_dates')->nullable();
             $table->mediumText('description')->nullable();
             $table->mediumText('image')->nullable();
             $table->char('nutriscore', 1)->nullable();

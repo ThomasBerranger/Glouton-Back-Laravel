@@ -25,7 +25,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'code' => 'integer|min:0|unique:'.Product::class,
-            'expiration_dates' => 'array',
+//            'expiration_dates' => 'array',
             'description' => 'string',
             'image' => 'string',
             'nutriscore' => 'string|size:1',

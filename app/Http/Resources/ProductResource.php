@@ -20,7 +20,7 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'code' => $this->code,
-            'expiration_dates' => $this->expiration_dates,
+            'expiration_dates' => ExpirationDatesResource::collection($this->whenLoaded('expirationDates')),
             'description' => $this->description,
             'image' => $this->image,
             'nutriscore' => $this->nutriscore,

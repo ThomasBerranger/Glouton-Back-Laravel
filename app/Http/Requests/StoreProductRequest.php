@@ -25,7 +25,10 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'code' => 'required|integer|min:0|unique:'.Product::class,
-            'expiration_dates' => 'array',
+
+            'expiration_dates' => 'required|array|min:1',             // au moins une valeur dans le tableau
+            'expiration_dates.*' => new StoreExpirationDateRequest(), // ?
+
             'description' => 'string',
             'image' => 'string',
             'nutriscore' => 'string|size:1',
@@ -33,6 +36,18 @@ class StoreProductRequest extends FormRequest
             'ecoscore' => 'string|size:1',
             'finished_at' => 'date_format:d/m/Y H:i',
             'added_to_purchase_list_at' => 'date_format:d/m/Y H:i',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'expiration_dates.*' => 'At least one expiration date is required.',
         ];
     }
 }

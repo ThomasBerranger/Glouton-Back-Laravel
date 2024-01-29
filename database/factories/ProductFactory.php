@@ -21,7 +21,7 @@ class ProductFactory extends Factory
             'name' => 'SKYR',
             'code' => '3033491454080',
             'user_id' => User::factory()->createQuietly(),
-            'expiration_dates' => $this->randomExpirationDates(),
+//            'expiration_dates' => $this->randomExpirationDates(),
             'description' => 'Spécialité laitière nature',
             'image' => 'https://images.openfoodfacts.org/images/products/303/349/145/4080/front_fr.134.400.jpg',
             'nutriscore' => 'a',
@@ -32,14 +32,14 @@ class ProductFactory extends Factory
         ];
     }
 
-    private function randomExpirationDates(): string
-    {
-        $expirationDates = [];
-
-        for ($i = 0; $i < fake()->numberBetween(1, 3); $i++) {
-            $expirationDates[] = fake()->dateTimeBetween('now', '+ 1 month')->format('d/m/Y');
-        }
-
-        return json_encode($expirationDates);
-    }
+//    private function randomExpirationDates(): string
+//    {
+//        $expirationDates = [];
+//
+//        for ($i = 0; $i < fake()->numberBetween(1, 3); $i++) {
+//            $expirationDates[] = fake()->dateTimeBetween('now', '+ 1 month')->format('d/m/Y');
+//        }
+//
+//        return json_encode($expirationDates);
+//    }
 }
