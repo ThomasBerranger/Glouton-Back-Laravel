@@ -7,24 +7,21 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreExpirationDateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+    public static function dateRules(): string
+    {
+        return 'required|date_format:d/m/Y';
+    }
+
     public function rules(): array
     {
         return [
             'product_id' => 'required|exists:' . Product::class . ',id',
-            'date' => 'required|date_format:d/m/Y H:i'
+            'date' => self::dateRules()
         ];
     }
 }

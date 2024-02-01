@@ -26,8 +26,8 @@ class StoreProductRequest extends FormRequest
             'name' => 'required|string|max:255',
             'code' => 'required|integer|min:0|unique:'.Product::class,
 
-            'expiration_dates' => 'required|array|min:1',             // au moins une valeur dans le tableau
-            'expiration_dates.*' => new StoreExpirationDateRequest(), // ?
+            'expiration_dates' => 'required|array|min:1',
+            'expiration_dates.*.date' => StoreExpirationDateRequest::dateRules(),
 
             'description' => 'string',
             'image' => 'string',

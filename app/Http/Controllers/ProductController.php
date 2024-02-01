@@ -43,7 +43,7 @@ class ProductController extends Controller
 
             $expirationDates = $request->validated()['expiration_dates'];
 
-            if (!empty($expirationDates)) {
+            if (!empty($expirationDates) and !empty($expirationDates[0])) {
                 foreach ($expirationDates as $expirationDate) {
                     ExpirationDate::create(['product_id' => $product->id, 'date' => $expirationDate['date']]);
                 }
