@@ -31,7 +31,7 @@ class ProductController extends Controller
 //            };
 //        }
 
-        return ProductResource::collection($user->products()->get());
+        return ProductResource::collection($user->products()->orderedByClosestExpirationDate()->get());
     }
 
     public function store(StoreProductRequest $request): ProductResource

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\User as UserScope;
+use App\Http\Scopes\Product as ProductScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    use HasFactory, UserScope;
+    use HasFactory, ProductScope;
 
     protected $guarded = [
         'user_id',
