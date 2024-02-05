@@ -31,8 +31,16 @@ class Product extends Model
     protected function finishedAt(): Attribute
     {
         return Attribute::make(
-            get: fn(?string $value) => $value ? Carbon::make($value)->format('d/m/Y H:i') : null,
-            set: fn(?string $value) => $value ? Carbon::createFromFormat('d/m/Y H:i', $value) : null,
+            get: fn (mixed $value): ?string => $value ? Carbon::parse($value)->format('d/m/Y H:i:s') : null,
+            set: fn (mixed $value): ?string => $value ? Carbon::createFromFormat('d/m/Y H:i:s', $value)->format('Y-m-d H:i:s') : null,
+        );
+    }
+
+    protected function addedToPurchaseListAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value): ?string => $value ? Carbon::parse($value)->format('d/m/Y H:i:s') : null,
+            set: fn (mixed $value): ?string => $value ? Carbon::createFromFormat('d/m/Y H:i:s', $value)->format('Y-m-d H:i:s') : null,
         );
     }
 }

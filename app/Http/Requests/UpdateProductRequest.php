@@ -25,14 +25,13 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'code' => 'integer|min:0|unique:'.Product::class,
-//            'expiration_dates' => 'array',
             'description' => 'string',
             'image' => 'string',
             'nutriscore' => 'string|size:1',
             'novagroup' => 'integer|max:4',
             'ecoscore' => 'string|size:1',
-            'finished_at' => 'date_format:d/m/Y H:i',
-            'added_to_purchase_list_at' => 'date_format:d/m/Y H:i',
+            'finished_at' => 'date_format:d/m/Y H:i:s',
+            'added_to_purchase_list_at' => 'date_format:d/m/Y H:i:s',
         ];
     }
 }

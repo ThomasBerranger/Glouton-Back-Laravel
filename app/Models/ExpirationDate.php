@@ -17,10 +17,6 @@ class ExpirationDate extends Model
         'date',
     ];
 
-    protected $casts = [
-        'date' => 'date:d/m/Y',
-    ];
-
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
