@@ -2,15 +2,68 @@
 
 namespace App\Http\Scopes;
 
+use Carbon\Carbon;
+use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\DB;
+
 trait Product
 {
-    public function scopeOrderedByClosestExpirationDate($query): void
+    public function scopeNotFinished($query): void
+    {
+        $query->whereNull('finished_at');
+    }
+
+    public function scopeOrderedByExpirationDate($query): void
+    {
+        $query
+            ->select('products.*', DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'))
+            ->join('expiration_dates', 'products.id', '=', 'expiration_dates.product_id')
+            ->groupBy('products.id')
+            ->orderBy('closest_expiration_date');
+    }
+
+    public function scopeWeek($query): void
+    {
+        $query
+            ->select('products.*', DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'))
+            ->join('expiration_dates', function (JoinClause $join) {
+                $join->on('products.id', '=', 'expiration_dates.product_id')
+                    ->where('expiration_dates.date', '<=', Carbon::now()->addWeek()->format('Y-m-d'));
+            })
+            ->groupBy('products.id')
+            ->orderBy('closest_expiration_date');
+    }
+
+    public function scopeMonth($query): void
+    {
+        $query
+            ->select('products.*', DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'))
+            ->join('expiration_dates', function (JoinClause $join) {
+                $join->on('products.id', '=', 'expiration_dates.product_id')
+                    ->where('expiration_dates.date', '>', Carbon::now()->addWeek()->format('Y-m-d'))
+                    ->where('expiration_dates.date', '<=', Carbon::now()->addMonth()->format('Y-m-d'));
+            })
+            ->groupBy('products.id')
+            ->orderBy('closest_expiration_date');
+    }
+
+    public function scopeYears($query): void
+    {
+        $query
+            ->select('products.*', DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'))
+            ->join('expiration_dates', function (JoinClause $join) {
+                $join->on('products.id', '=', 'expiration_dates.product_id')
+                    ->where('expiration_dates.date', '>', Carbon::now()->addMonth()->format('Y-m-d'));
+            })
+            ->groupBy('products.id')
+            ->orderBy('closest_expiration_date');
+    }
+
+    public function scopeFinished($query): void
     {
         $query
             ->select('products.*')
-            ->join('expiration_dates', 'products.id', '=', 'expiration_dates.product_id')
-            ->groupBy('products.id')
-            ->orderBy('expiration_dates.date')
-        ;
+            ->whereNotNull('finished_at')
+            ->orderBy('finished_at', 'desc');
     }
 }

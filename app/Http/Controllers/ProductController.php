@@ -23,15 +23,27 @@ class ProductController extends Controller
     {
         $user = Auth::user();
 
-//        if ($request->has('filter')) {
-//            return match ($request->get('filter')['expiration_date']) {
-//                Filter::WEEK->value => ProductResource::collection($user->products()->expireThisWeek()->orderedByClosestExpirationDate()->get()),
-//                Filter::MONTH->value => ProductResource::collection($user->products()->expireThisMonth()->orderedByClosestExpirationDate()->get()),
-//                default => $request->get('filter'),
-//            };
-//        }
+        if ($request->has('filter') && array_key_exists('expiration_dates', $request->get('filter'))) {
+            if ($request->get('filter')['expiration_dates'] === Filter::WEEK->value) {
+                return ProductResource::collection(
+                    $user->products()->notFinished()->week()->get()
+                );
+            } else if ($request->get('filter')['expiration_dates'] === Filter::MONTH->value) {
+                return ProductResource::collection(
+                    $user->products()->notFinished()->month()->get()
+                );
+            } else if ($request->get('filter')['expiration_dates'] === Filter::YEARS->value) {
+                return ProductResource::collection(
+                    $user->products()->notFinished()->years()->get()
+                );
+            } else if ($request->get('filter')['expiration_dates'] === Filter::FINISHED->value) {
+                return ProductResource::collection(
+                    $user->products()->finished()->get()
+                );
+            }
+        }
 
-        return ProductResource::collection($user->products()->orderedByClosestExpirationDate()->get());
+        return ProductResource::collection($user->products()->orderedByExpirationDate()->get());
     }
 
     public function store(StoreProductRequest $request): ProductResource
