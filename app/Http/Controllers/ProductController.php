@@ -19,6 +19,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Product::class, 'product');
+    }
+
     public function index(Request $request): AnonymousResourceCollection
     {
         $user = Auth::user();
@@ -38,12 +43,12 @@ class ProductController extends Controller
                 );
             } else if ($request->get('filter')['expiration_dates'] === Filter::FINISHED->value) {
                 return ProductResource::collection(
-                    $user->products()->finished()->get() // todo: create scope orderBy and edit finished
+                    $user->products()->finished()->orderedBy('finished_at', false)->get()
                 );
             }
         }
 
-        return ProductResource::collection($user->products()->orderedByExpirationDate()->get());
+        return ProductResource::collection($user->products()->withMinExpirationDate()->orderedBy('closest_expiration_date')->get());
     }
 
     public function store(StoreProductRequest $request): ProductResource
@@ -67,15 +72,11 @@ class ProductController extends Controller
 
     public function show(Request $request, Product $product): ProductResource
     {
-        $this->authorize('view', $product);
-
         return ProductResource::make($product->load('expirationDates'));
     }
 
     public function update(UpdateProductRequest $request, Product $product): ProductResource
     {
-        $this->authorize('update', $product);
-
         $product->update($request->validated());
 
         return ProductResource::make($product);
@@ -83,8 +84,6 @@ class ProductController extends Controller
 
     public function destroy(Product $product): Response
     {
-        $this->authorize('delete', $product);
-
         $product->delete();
 
         return response()->noContent();

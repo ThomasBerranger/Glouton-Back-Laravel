@@ -8,9 +8,9 @@ use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
-    public function viewAny(User $user): false
+    public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     public function view(User $user, Product $product): Response
@@ -20,7 +20,7 @@ class ProductPolicy
 
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     public function update(User $user, Product $product): Response
