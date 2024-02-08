@@ -13,14 +13,6 @@ trait Product
         $query->whereNull('finished_at');
     }
 
-    public function scopeWithMinExpirationDate($query): void
-    {
-        $query
-            ->select('products.*', DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'))
-            ->join('expiration_dates', 'products.id', '=', 'expiration_dates.product_id')
-            ->groupBy('products.id');
-    }
-
     public function scopeWeek($query): void
     {
         $query
@@ -60,11 +52,24 @@ trait Product
 
     public function scopeFinished($query): void
     {
-        $query->select('products.*')->whereNotNull('finished_at');
+        $query->whereNotNull('finished_at');
+    }
+
+    public function scopeToPurchase($query): void
+    {
+        $query->whereNotNull('added_to_purchase_list_at');
     }
 
     public function scopeOrderedBy($query, string $column, bool $ascending = true): void
     {
         $query->orderBy($column, $ascending ? 'asc' : 'desc');
+    }
+
+    public function scopeGroupedByMinExpirationDate($query): void
+    {
+        $query
+            ->select('products.*', DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'))
+            ->join('expiration_dates', 'products.id', '=', 'expiration_dates.product_id')
+            ->groupBy('products.id');
     }
 }

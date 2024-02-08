@@ -8,4 +8,5 @@ enum Filter: string
     case MONTH = 'month';
     case YEARS = 'years';
     case FINISHED = 'finished';
+    case TO_PURCHASE = 'to_purchase';
 }

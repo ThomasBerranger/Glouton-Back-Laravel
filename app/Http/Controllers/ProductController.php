@@ -9,6 +9,7 @@ use App\Http\Resources\ExpirationDatesResource;
 use App\Http\Resources\ProductResource;
 use App\Models\ExpirationDate;
 use App\Models\Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -24,31 +25,26 @@ class ProductController extends Controller
         $this->authorizeResource(Product::class, 'product');
     }
 
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection|JsonResponse
     {
         $user = Auth::user();
 
-        if ($request->has('filter') && array_key_exists('expiration_dates', $request->get('filter'))) {
-            if ($request->get('filter')['expiration_dates'] === Filter::WEEK->value) {
-                return ProductResource::collection(
-                    $user->products()->notFinished()->week()->get()
-                );
-            } else if ($request->get('filter')['expiration_dates'] === Filter::MONTH->value) {
-                return ProductResource::collection(
-                    $user->products()->notFinished()->month()->get()
-                );
-            } else if ($request->get('filter')['expiration_dates'] === Filter::YEARS->value) {
-                return ProductResource::collection(
-                    $user->products()->notFinished()->years()->get()
-                );
-            } else if ($request->get('filter')['expiration_dates'] === Filter::FINISHED->value) {
-                return ProductResource::collection(
-                    $user->products()->finished()->orderedBy('finished_at', false)->get()
-                );
-            }
+        if (!$request->has('filter')) {
+            return ProductResource::collection($user->products()->groupedByMinExpirationDate()->orderedBy('closest_expiration_date')->get());
+        } else if (array_key_exists('category', $request->get('filter'))) {
+            $category = $request->get('filter')['category'];
+
+            return match ($request->get('filter')['category']) {
+                Filter::WEEK->value => ProductResource::collection($user->products()->notFinished()->week()->get()),
+                Filter::MONTH->value => ProductResource::collection($user->products()->notFinished()->month()->get()),
+                Filter::YEARS->value => ProductResource::collection($user->products()->notFinished()->years()->get()),
+                Filter::FINISHED->value => ProductResource::collection($user->products()->finished()->orderedBy('finished_at', false)->get()),
+                Filter::TO_PURCHASE->value => ProductResource::collection($user->products()->toPurchase()->orderedBy('added_to_purchase_list_at')->get()),
+                default => response()->json(['Filter value unknown'], 400)
+            };
         }
 
-        return ProductResource::collection($user->products()->withMinExpirationDate()->orderedBy('closest_expiration_date')->get());
+        return response()->json(['Filter unknown'], 400);
     }
 
     public function store(StoreProductRequest $request): ProductResource
