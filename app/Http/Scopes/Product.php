@@ -16,7 +16,11 @@ trait Product
     public function scopeWeek($query): void
     {
         $query
-            ->select('products.*', DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'))
+            ->select(
+                'products.*',
+                DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'),
+                DB::raw('(SELECT COUNT(*) FROM expiration_dates WHERE expiration_dates.product_id = products.id) AS expiration_date_count')
+            )
             ->join('expiration_dates', function (JoinClause $join) {
                 $join->on('products.id', '=', 'expiration_dates.product_id')
                     ->where('expiration_dates.date', '<=', Carbon::now()->addWeek()->format('Y-m-d'));
@@ -28,7 +32,11 @@ trait Product
     public function scopeMonth($query): void
     {
         $query
-            ->select('products.*', DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'))
+            ->select(
+                'products.*',
+                DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'),
+                DB::raw('(SELECT COUNT(*) FROM expiration_dates WHERE expiration_dates.product_id = products.id) AS expiration_date_count')
+            )
             ->join('expiration_dates', function (JoinClause $join) {
                 $join->on('products.id', '=', 'expiration_dates.product_id')
                     ->where('expiration_dates.date', '>', Carbon::now()->addWeek()->format('Y-m-d'))
@@ -41,7 +49,11 @@ trait Product
     public function scopeYears($query): void
     {
         $query
-            ->select('products.*', DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'))
+            ->select(
+                'products.*',
+                DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'),
+                DB::raw('(SELECT COUNT(*) FROM expiration_dates WHERE expiration_dates.product_id = products.id) AS expiration_date_count')
+            )
             ->join('expiration_dates', function (JoinClause $join) {
                 $join->on('products.id', '=', 'expiration_dates.product_id')
                     ->where('expiration_dates.date', '>', Carbon::now()->addMonth()->format('Y-m-d'));
@@ -68,8 +80,12 @@ trait Product
     public function scopeGroupedByMinExpirationDate($query): void
     {
         $query
-            ->select('products.*', DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'))
-            ->join('expiration_dates', 'products.id', '=', 'expiration_dates.product_id')
+            ->select(
+                'products.*',
+                DB::raw('MIN(expiration_dates.date) AS closest_expiration_date'),
+                DB::raw('COUNT(expiration_dates.product_id) AS expiration_date_count')
+            )
+            ->leftJoin('expiration_dates', 'products.id', '=', 'expiration_dates.product_id')
             ->groupBy('products.id');
     }
 }

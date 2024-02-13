@@ -28,6 +28,8 @@ class ProductResource extends JsonResource
             'ecoscore' => $this->ecoscore,
             'finished_at' => $this->finished_at,
             'added_to_purchase_list_at' => $this->added_to_purchase_list_at,
+            'closest_expiration_date' => $this->closest_expiration_date,
+            'expiration_date_count' => $this->expiration_date_count,
         ];
     }
 }
