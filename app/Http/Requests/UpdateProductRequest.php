@@ -23,8 +23,7 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'code' => 'integer|min:0|unique:'.Product::class,
+            'name' => 'string|max:255',
             'description' => 'string',
             'image' => 'string',
             'nutriscore' => 'string|size:1',
