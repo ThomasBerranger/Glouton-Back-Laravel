@@ -27,6 +27,6 @@ class RegisterController extends Controller
 
         $token = $user->createToken('register');
 
-        return response()->json(['token' => $token->plainTextToken])->header('Content-Type', 'application/json');
+        return response()->json(['token' => $token->plainTextToken]);
     }
 }
