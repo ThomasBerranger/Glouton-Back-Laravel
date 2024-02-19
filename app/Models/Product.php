@@ -14,6 +14,8 @@ class Product extends Model
 {
     use HasFactory, ProductScope;
 
+    const CUSTOM_CODE_PREFIX = 'CUSTOM-';
+
     protected $guarded = [
         'user_id',
     ];
