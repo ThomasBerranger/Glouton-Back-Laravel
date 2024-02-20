@@ -13,6 +13,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const REGISTER_TOKEN_NAME = 'register';
+    const LOGIN_TOKEN_NAME = 'login';
+
     /**
      * The attributes that are mass assignable.
      *

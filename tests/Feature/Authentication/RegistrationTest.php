@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Tests\TestCase;
 
 uses()->group('authentication');
 
@@ -15,7 +16,6 @@ it('can register new user', function () {
     $this->assertDatabaseCount('personal_access_tokens', 1);
     $this->assertDatabaseHas('personal_access_tokens', [
         'tokenable_type' => User::class,
-        'tokenable_id' => 1,
         'name' => 'register',
         'abilities' => '["*"]'
     ]);

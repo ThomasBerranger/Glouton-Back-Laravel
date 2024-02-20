@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class AuthenticationController extends Controller
 
         $user->tokens()->delete();
 
-        $token = $user->createToken('login');
+        $token = $user->createToken(User::LOGIN_TOKEN_NAME);
 
         return response()->json(['token' => $token->plainTextToken]);
     }

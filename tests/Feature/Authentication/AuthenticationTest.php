@@ -1,88 +1,51 @@
 <?php
 
+use App\Models\User;
+use Tests\TestCase;
+
 uses()->group('authentication');
 
-use App\Models\User;
+it('users can authenticate using their token', function () {
+    $user = User::factory()->create();
 
-//test('users can authenticate using their token', function () {
-//    $user = User::factory()->create();
-//
-//    $response = $this->post('/login', [
-//        'email' => $user->email,
-//        'password' => 'password',
-//    ]);
-//
-//    $this->assertAuthenticated();
-//    $response->assertNoContent();
-//});
+    $response = $this->post('/api/login', [
+        'email' => $user->email,
+        'password' => 'password',
+    ]);
 
-//test('users can not authenticate with invalid password', function () {
-//    $user = User::factory()->create();
-//
-//    $this->post('/login', [
-//        'email' => $user->email,
-//        'password' => 'wrong-password',
-//    ]);
-//
-//    $this->assertGuest();
-//});
+    $this->assertDatabaseCount('personal_access_tokens', 1);
+    $this->assertDatabaseHas('personal_access_tokens', [
+        'tokenable_type' => User::class,
+        'name' => 'login',
+        'abilities' => '["*"]'
+    ]);
 
-//test('users can logout', function () {
-//    $user = User::factory()->create();
-//
-//    $response = $this->actingAs($user)->post('/logout');
-//
-//    $response->assertNoContent();
-//});
+    $response->assertHeader('Content-Type', 'application/json');
+    $response->assertOk();
+    $response->assertJsonStructure(['token']);
+});
 
+it('can not authenticate users with invalid password', function () {
+    $user = User::factory()->create();
 
-//it('can return a token for a registered user', function () {
-//    $this->post('/api/login', [
-//        'email' => $this->user->email,
-//        'password' => UserFactory::PASSWORD,
-//    ])->assertCreated()->assertJson(function (AssertableJson $json) {
-//        $json->whereType('token', 'string');
-//    });
-//});
-//
-//it('can create in database a token for a registered user', function () {
-//    $this->post('/api/login', [
-//        'email' => $this->user->email,
-//        'password' => UserFactory::PASSWORD,
-//    ]);
-//
-//    $this->assertDatabaseCount('personal_access_tokens', 1);
-//});
+    $response = $this->post(
+        '/api/login',
+        ['email' => $user->email, 'password' => 'wrong-password'],
+        ['Accept' => 'application/json']
+    );
 
-//it('can create a token which expires in two weeks', function () {
-//    $this->post('/api/login', [
-//        'email' => $this->user->email,
-//        'password' => $this->user->password,
-//    ]);
-//
-//    $this->travelTo(now()->addWeeks(2)->addDay()->addSecond());
-//
-//    $this->artisan('sanctum:prune-expired --hours=24')->execute();
-//
-//    $this->assertDatabaseEmpty('personal_access_tokens');
-//});
+    $response->assertUnprocessable();
+    $response->assertHeader('Content-Type', 'application/json');
+});
 
-//it('can\'t create a token for an unregistered user', function () {
-//    $this->post('/api/login',
-//        [
-//            'email' => fake()->email,
-//            'password' => fake()->password,
-//        ],
-//        ['Accept' => 'application/json']
-//    )->assertUnprocessable();
-//});
+it('can logout users', function () {
+    $user = User::factory()->withToken(User::LOGIN_TOKEN_NAME)->create();
 
-//it('can\'t create a token for a user with wrong password', function () {
-//    $this->post('/api/login',
-//        [
-//            'email' => $this->user->email,
-//            'password' => 'wrong password',
-//        ],
-//        ['Accept' => 'application/json']
-//    )->assertUnprocessable();
-//});
+    $this->assertDatabaseCount('personal_access_tokens', 1);
+
+    $response = $this->actingAs($user)->post('/api/logout');
+
+    $this->assertDatabaseCount('personal_access_tokens', 0);
+
+    $response->assertNoContent();
+});
