@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\DateAttributeUtil;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,9 +25,6 @@ class ExpirationDate extends Model
 
     public function date(): Attribute
     {
-        return Attribute::make(
-            get: fn (mixed $value): ?string => Carbon::parse($value)->format('d/m/Y'),
-            set: fn (mixed $value): ?string => Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d'),
-        );
+        return DateAttributeUtil::dateAttribute();
     }
 }

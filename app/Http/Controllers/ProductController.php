@@ -26,17 +26,17 @@ class ProductController extends Controller
     {
         $user = Auth::user();
 
-        if (!$request->has('filter')) {
-            return ProductResource::collection($user->products()->groupedByMinExpirationDate()->orderedBy('closest_expiration_date')->get());
-        } else if (array_key_exists('category', $request->get('filter'))) {
-            $category = $request->get('filter')['category'];
+        $request = $request->toArray();
 
-            return match ($request->get('filter')['category']) {
-                Filter::WEEK->value => ProductResource::collection($user->products()->notFinished()->week()->get()),
-                Filter::MONTH->value => ProductResource::collection($user->products()->notFinished()->month()->get()),
-                Filter::YEARS->value => ProductResource::collection($user->products()->notFinished()->years()->get()),
-                Filter::FINISHED->value => ProductResource::collection($user->products()->finished()->orderedBy('finished_at', false)->get()),
-                Filter::TO_PURCHASE->value => ProductResource::collection($user->products()->toPurchase()->orderedBy('added_to_purchase_list_at')->get()),
+        if (!array_key_exists('filter', $request)) {
+            return ProductResource::collection($user?->products()->groupedByMinExpirationDate()->orderedBy('closest_expiration_date')->get());
+        } else if (array_key_exists('category', $request['filter'])) {
+            return match ($request['filter']['category']) {
+                Filter::WEEK->value => ProductResource::collection($user?->products()->notFinished()->week()->get()),
+                Filter::MONTH->value => ProductResource::collection($user?->products()->notFinished()->month()->get()),
+                Filter::YEARS->value => ProductResource::collection($user?->products()->notFinished()->years()->get()),
+                Filter::FINISHED->value => ProductResource::collection($user?->products()->finished()->orderedBy('finished_at', false)->get()),
+                Filter::TO_PURCHASE->value => ProductResource::collection($user?->products()->toPurchase()->orderedBy('added_to_purchase_list_at')->get()),
                 default => response()->json(['Filter value unknown'], 400)
             };
         }
@@ -46,7 +46,7 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request): ProductResource
     {
-        $product = Product::make($request->validated());
+        $product = new Product($request->validated());
 
         DB::transaction(function () use ($product, $request) {
             $product->save();

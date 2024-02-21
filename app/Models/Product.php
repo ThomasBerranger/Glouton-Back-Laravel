@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Http\Scopes\Product as ProductScope;
+use App\Http\Scopes\ProductScope;
+use App\Utils\DateAttributeUtil;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,17 +33,11 @@ class Product extends Model
 
     protected function finishedAt(): Attribute
     {
-        return Attribute::make(
-            get: fn (mixed $value): ?string => $value ? Carbon::parse($value)->format('d/m/Y H:i:s') : null,
-            set: fn (mixed $value): ?string => $value ? Carbon::createFromFormat('d/m/Y H:i:s', $value)->format('Y-m-d H:i:s') : null,
-        );
+        return DateAttributeUtil::dateAttribute();
     }
 
     protected function addedToPurchaseListAt(): Attribute
     {
-        return Attribute::make(
-            get: fn (mixed $value): ?string => $value ? Carbon::parse($value)->format('d/m/Y H:i:s') : null,
-            set: fn (mixed $value): ?string => $value ? Carbon::createFromFormat('d/m/Y H:i:s', $value)->format('Y-m-d H:i:s') : null,
-        );
+        return DateAttributeUtil::dateAttribute();
     }
 }

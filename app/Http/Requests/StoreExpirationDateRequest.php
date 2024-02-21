@@ -17,6 +17,9 @@ class StoreExpirationDateRequest extends FormRequest
         return 'required|date_format:d/m/Y';
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function rules(): array
     {
         return [

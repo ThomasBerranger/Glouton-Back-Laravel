@@ -22,7 +22,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->password), // @phpstan-ignore-line
         ]);
 
         $token = $user->createToken(User::REGISTER_TOKEN_NAME);

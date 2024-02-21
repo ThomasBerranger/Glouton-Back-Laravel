@@ -3,17 +3,18 @@
 namespace App\Http\Scopes;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
 
-trait Product
+trait ProductScope
 {
-    public function scopeNotFinished($query): void
+    public function scopeNotFinished(Builder $query): void
     {
         $query->whereNull('finished_at');
     }
 
-    public function scopeWeek($query): void
+    public function scopeWeek(Builder $query): void
     {
         $query
             ->select(
@@ -29,7 +30,7 @@ trait Product
             ->orderBy('closest_expiration_date');
     }
 
-    public function scopeMonth($query): void
+    public function scopeMonth(Builder $query): void
     {
         $query
             ->select(
@@ -46,7 +47,7 @@ trait Product
             ->orderBy('closest_expiration_date');
     }
 
-    public function scopeYears($query): void
+    public function scopeYears(Builder $query): void
     {
         $query
             ->select(
@@ -62,22 +63,22 @@ trait Product
             ->orderBy('closest_expiration_date');
     }
 
-    public function scopeFinished($query): void
+    public function scopeFinished(Builder $query): void
     {
         $query->whereNotNull('finished_at');
     }
 
-    public function scopeToPurchase($query): void
+    public function scopeToPurchase(Builder $query): void
     {
         $query->whereNotNull('added_to_purchase_list_at');
     }
 
-    public function scopeOrderedBy($query, string $column, bool $ascending = true): void
+    public function scopeOrderedBy(Builder $query, string $column, bool $ascending = true): void
     {
         $query->orderBy($column, $ascending ? 'asc' : 'desc');
     }
 
-    public function scopeGroupedByMinExpirationDate($query): void
+    public function scopeGroupedByMinExpirationDate(Builder $query): void
     {
         $query
             ->select(

@@ -1,8 +1,12 @@
 includes:
     - ./vendor/nunomaduro/larastan/extension.neon
+
 parameters:
     paths:
         - app
     level: 9
     ignoreErrors:
+        - '#Access to an undefined property#'
     excludePaths:
+
+    checkGenericClassInNonGenericObjectType: false

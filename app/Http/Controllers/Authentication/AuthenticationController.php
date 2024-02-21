@@ -12,11 +12,16 @@ use Illuminate\Http\JsonResponse;
 
 class AuthenticationController extends Controller
 {
+    /**
+     * @throws \Throwable
+     */
     public function store(LoginRequest $request): JsonResponse
     {
         $request->authenticate();
 
         $user = $request->user();
+
+        throw_if(!$user);
 
         $user->tokens()->delete();
 
@@ -25,9 +30,14 @@ class AuthenticationController extends Controller
         return response()->json(['token' => $token->plainTextToken]);
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function destroy(Request $request): Response
     {
         $user = Auth::user();
+
+        throw_if(!$user);
 
         $user->tokens()->delete();
 
