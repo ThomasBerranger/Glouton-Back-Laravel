@@ -6,7 +6,7 @@ use App\Models\Product;
 
 uses()->group('product');
 
-it('find the latest product custom code', function (array $codes, string $expectedCode) {
+it('find the highest product custom code', function (array $codes, string $expectedCode) {
     foreach ($codes as $code) {
         Product::factory()->createQuietly(['code' => $code]);
     }
@@ -20,3 +20,7 @@ it('find the latest product custom code', function (array $codes, string $expect
     [[Product::CUSTOM_CODE_PREFIX . '1', Product::CUSTOM_CODE_PREFIX . '3', Product::CUSTOM_CODE_PREFIX . '2'], Product::CUSTOM_CODE_PREFIX . '3'],
     [['1', '201350002654', Product::CUSTOM_CODE_PREFIX . '1', Product::CUSTOM_CODE_PREFIX . '2'], Product::CUSTOM_CODE_PREFIX . '2', '32123'],
 ]);
+
+it('should not find the highest product custom code', function () {
+    expect(resolve(FindHighestCustomCodeProduct::class)())->toBeNull();
+});
