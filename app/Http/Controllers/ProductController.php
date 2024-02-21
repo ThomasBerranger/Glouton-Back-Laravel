@@ -51,12 +51,10 @@ class ProductController extends Controller
         DB::transaction(function () use ($product, $request) {
             $product->save();
 
-            $expirationDates = $request->validated()['expiration_dates'];
+            $expirationDates = $request->safe()->only('expiration_dates')['expiration_dates'];
 
-            if (!empty($expirationDates) and !empty($expirationDates[0])) {
-                foreach ($expirationDates as $expirationDate) {
-                    ExpirationDate::create(['product_id' => $product->id, 'date' => $expirationDate['date']]);
-                }
+            foreach ($expirationDates as $expirationDate) {
+                ExpirationDate::create(['product_id' => $product->id, 'date' => $expirationDate['date']]);
             }
         });
 
