@@ -33,8 +33,8 @@ class ProductFactory extends Factory
             'nutriscore' => fake()->optional()->randomElement(['a', 'b', 'c', 'd', 'e', null]),
             'novagroup' => fake()->optional()->numberBetween(1, 3),
             'ecoscore' => fake()->optional()->randomElement(['a', 'b', 'c', 'd', 'e', null]),
-            'finished_at' => $finishedAt ? $finishedAt->format('d/m/y H:i:s') : $finishedAt,
-            'added_to_purchase_list_at' => $addedToPurchaseListAt ? $addedToPurchaseListAt->format('d/m/y H:i:s') : $addedToPurchaseListAt,
+            'finished_at' => $finishedAt ? $finishedAt->format('d/m/y') : $finishedAt,
+            'added_to_purchase_list_at' => $addedToPurchaseListAt ? $addedToPurchaseListAt->format('d/m/y') : $addedToPurchaseListAt,
         ];
     }
 }

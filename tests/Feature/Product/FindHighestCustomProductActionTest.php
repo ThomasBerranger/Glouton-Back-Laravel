@@ -18,7 +18,7 @@ it('can find the highest product custom code', function (array $codes, string $e
     [[Product::CUSTOM_CODE_PREFIX . '1'], Product::CUSTOM_CODE_PREFIX . '1'],
     [['1'], Product::CUSTOM_CODE_PREFIX . '1'],
     [[Product::CUSTOM_CODE_PREFIX . '1', Product::CUSTOM_CODE_PREFIX . '3', Product::CUSTOM_CODE_PREFIX . '2'], Product::CUSTOM_CODE_PREFIX . '3'],
-    [['1', '201350002654', Product::CUSTOM_CODE_PREFIX . '1', Product::CUSTOM_CODE_PREFIX . '2'], Product::CUSTOM_CODE_PREFIX . '2', '32123'],
+    [['1', '201350002654', Product::CUSTOM_CODE_PREFIX . '1', Product::CUSTOM_CODE_PREFIX . '2'], Product::CUSTOM_CODE_PREFIX . '2'],
 ]);
 
 it('can not find the highest product custom code', function () {
