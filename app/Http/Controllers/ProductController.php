@@ -37,11 +37,11 @@ class ProductController extends Controller
                 Filter::YEARS->value => ProductResource::collection($user?->products()->notFinished()->years()->get()),
                 Filter::FINISHED->value => ProductResource::collection($user?->products()->finished()->orderedBy('finished_at', false)->get()),
                 Filter::TO_PURCHASE->value => ProductResource::collection($user?->products()->toPurchase()->orderedBy('added_to_purchase_list_at')->get()),
-                default => response()->json(['Filter value unknown'], 400)
+                default => response()->json(['error' => 'Category value unknown'], 400)
             };
         }
 
-        return response()->json(['Filter unknown'], 400);
+        return response()->json(['error' => 'Filter unknown'], 400);
     }
 
     public function store(StoreProductRequest $request): ProductResource
