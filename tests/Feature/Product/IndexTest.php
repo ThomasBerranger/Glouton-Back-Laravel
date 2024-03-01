@@ -168,7 +168,7 @@ it('can get products expected fields', function () {
     ]);
 });
 
-it('can get products list filtered with wrong filter', function () {
+it('can not get products list filtered with wrong filter', function () {
     Sanctum::actingAs(User::factory()->createQuietly());
 
     $response = $this->get('/api/products?filter[wrong]', ['Accept' => 'application/json']);
@@ -177,7 +177,7 @@ it('can get products list filtered with wrong filter', function () {
     $response->assertJson(['error' => 'Filter unknown']);
 });
 
-it('can get products list filtered with wrong filter value', function () {
+it('can not get products list filtered with wrong filter value', function () {
     Sanctum::actingAs(User::factory()->createQuietly());
 
     $response = $this->get('/api/products?filter[category]=wrong', ['Accept' => 'application/json']);
