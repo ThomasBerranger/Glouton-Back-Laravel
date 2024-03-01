@@ -132,6 +132,42 @@ it('can get products list filtered by to_purchase', function () {
     $response->assertJsonCount(1, 'data');
 });
 
+it('can get products expected fields', function () {
+    $user = User::factory()->createQuietly();
+
+    Product::factory(4)
+        ->has(ExpirationDate::factory(fake()->numberBetween(0, 3)))
+        ->createQuietly(['user_id' => $user->id]);
+
+    Sanctum::actingAs($user);
+
+    $response = $this->get('/api/products', ['Accept' => 'application/json']);
+
+    $response->assertExactJson([
+        'data' => $user
+            ->products()
+            ->groupedByMinExpirationDate()
+            ->orderedBy('closest_expiration_date')
+            ->get()
+            ->map(function (Product $product) {
+                return [
+                    'added_to_purchase_list_at' => $product->added_to_purchase_list_at,
+                    'closest_expiration_date' => $product->closest_expiration_date,
+                    'code' => $product->code,
+                    'description' => $product->description,
+                    'ecoscore' => $product->ecoscore,
+                    'expiration_date_count' => $product->expiration_date_count,
+                    'finished_at' => $product->finished_at,
+                    'id' => $product->id,
+                    'image' => $product->image,
+                    'name' => $product->name,
+                    'novagroup' => $product->novagroup,
+                    'nutriscore' => $product->nutriscore,
+                ];
+            })
+    ]);
+});
+
 it('can get products list filtered with wrong filter', function () {
     Sanctum::actingAs(User::factory()->createQuietly());
 
