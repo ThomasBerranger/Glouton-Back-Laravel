@@ -45,11 +45,11 @@ it('can get products list filtered by week', function () {
     $user = User::factory()->createQuietly();
 
     Product::factory(['user_id' => $user->id, 'finished_at' => null])
-        ->has(ExpirationDate::factory(['date' => Carbon::now()->addDays(2)->format('d/m/Y')]))
+        ->hasExpirationDates(1, ['date' => Carbon::now()->addDays(2)->format('d/m/Y')])
         ->createQuietly();
 
     Product::factory(['user_id' => $user->id, 'finished_at' => null])
-        ->has(ExpirationDate::factory(['date' => Carbon::now()->addYear()->format('d/m/Y')]))
+        ->hasExpirationDates(1, ['date' => Carbon::now()->addYear()->format('d/m/Y')])
         ->createQuietly();
 
     Sanctum::actingAs($user);
@@ -64,15 +64,15 @@ it('can get products list filtered by month', function () {
     $user = User::factory()->createQuietly();
 
     Product::factory(['user_id' => $user->id, 'finished_at' => null])
-        ->has(ExpirationDate::factory(['date' => Carbon::now()->format('d/m/Y')]))
+        ->hasExpirationDates(1, ['date' => Carbon::now()->format('d/m/Y')])
         ->createQuietly();
 
     Product::factory(['user_id' => $user->id, 'finished_at' => null])
-        ->has(ExpirationDate::factory(['date' => Carbon::now()->addWeeks(3)->format('d/m/Y')]))
+        ->hasExpirationDates(1, ['date' => Carbon::now()->addWeeks(3)->format('d/m/Y')])
         ->createQuietly();
 
     Product::factory(['user_id' => $user->id, 'finished_at' => null])
-        ->has(ExpirationDate::factory(['date' => Carbon::now()->addYear()->format('d/m/Y')]))
+        ->hasExpirationDates(1, ['date' => Carbon::now()->addYear()->format('d/m/Y')])
         ->createQuietly();
 
     Sanctum::actingAs($user);
@@ -87,11 +87,11 @@ it('can get products list filtered by years', function () {
     $user = User::factory()->createQuietly();
 
     Product::factory(['user_id' => $user->id, 'finished_at' => null])
-        ->has(ExpirationDate::factory(['date' => Carbon::now()->format('d/m/Y')]))
+        ->hasExpirationDates(1, ['date' => Carbon::now()->format('d/m/Y')])
         ->createQuietly();
 
     Product::factory(['user_id' => $user->id, 'finished_at' => null])
-        ->has(ExpirationDate::factory(['date' => Carbon::now()->addYear()->format('d/m/Y')]))
+        ->hasExpirationDates(1, ['date' => Carbon::now()->addYear()->format('d/m/Y')])
         ->createQuietly();
 
     Sanctum::actingAs($user);
@@ -136,7 +136,7 @@ it('can get products expected fields', function () {
     $user = User::factory()->createQuietly();
 
     Product::factory(4)
-        ->has(ExpirationDate::factory(fake()->numberBetween(0, 3)))
+        ->hasExpirationDates(fake()->numberBetween(0, 3))
         ->createQuietly(['user_id' => $user->id]);
 
     Sanctum::actingAs($user);

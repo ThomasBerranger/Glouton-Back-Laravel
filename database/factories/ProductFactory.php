@@ -24,17 +24,17 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->word,
             'code' => fake()->randomElement([
-                (string) fake()->randomNumber(),
+                (string)fake()->randomNumber(),
                 fake()->numerify(Product::CUSTOM_CODE_PREFIX . '###')
             ]),
             'user_id' => User::factory()->createQuietly(),
             'description' => fake()->optional()->sentence,
             'image' => fake()->optional()->url,
-            'nutriscore' => fake()->optional()->randomElement(['a', 'b', 'c', 'd', 'e', null]),
+            'nutriscore' => fake()->optional()->randomElement(['a', 'b', 'c', 'd', 'e']),
             'novagroup' => fake()->optional()->numberBetween(1, 3),
-            'ecoscore' => fake()->optional()->randomElement(['a', 'b', 'c', 'd', 'e', null]),
-            'finished_at' => $finishedAt ? $finishedAt->format('d/m/y') : $finishedAt,
-            'added_to_purchase_list_at' => $addedToPurchaseListAt ? $addedToPurchaseListAt->format('d/m/y') : $addedToPurchaseListAt,
+            'ecoscore' => fake()->optional()->randomElement(['a', 'b', 'c', 'd', 'e']),
+            'finished_at' => $finishedAt ? $finishedAt->format('d/m/Y') : $finishedAt,
+            'added_to_purchase_list_at' => $addedToPurchaseListAt ? $addedToPurchaseListAt->format('d/m/Y') : $addedToPurchaseListAt,
         ];
     }
 }

@@ -31,7 +31,7 @@ it('can get product', function () {
 it('can get product expected fields', function () {
     $user = User::factory()->createQuietly();
 
-    $product = Product::factory(['user_id' => $user->id])->has(ExpirationDate::factory())->createQuietly();
+    $product = Product::factory(['user_id' => $user->id])->hasExpirationDates()->createQuietly();
 
     Sanctum::actingAs($user);
 

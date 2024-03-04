@@ -47,15 +47,11 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request): ProductResource
     {
         $product = new Product($request->validated());
+        $expirationDates = $request->safe()->only('expiration_dates')['expiration_dates'];
 
-        DB::transaction(function () use ($product, $request) {
+        DB::transaction(function () use ($product, $expirationDates) {
             $product->save();
-
-            $expirationDates = $request->safe()->only('expiration_dates')['expiration_dates'];
-
-            foreach ($expirationDates as $expirationDate) {
-                ExpirationDate::create(['product_id' => $product->id, 'date' => $expirationDate['date']]);
-            }
+            $product->expirationDates()->createMany($expirationDates);
         });
 
         return ProductResource::make($product->load('expirationDates'));
