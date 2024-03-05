@@ -28,8 +28,8 @@ class UpdateProductRequest extends FormRequest
             'nutriscore' => 'string|size:1',
             'novagroup' => 'integer|max:4',
             'ecoscore' => 'string|size:1',
-            'finished_at' => 'date_format:d/m/Y H:i:s',
-            'added_to_purchase_list_at' => 'date_format:d/m/Y H:i:s',
+            'finished_at' => 'date_format:d/m/Y',
+            'added_to_purchase_list_at' => 'date_format:d/m/Y',
         ];
     }
 }
