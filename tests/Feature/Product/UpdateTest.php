@@ -8,7 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Laravel\Sanctum\Sanctum;
 
-uses()->group('progress');
+uses()->group('product');
 
 it('can not update product if no authenticate', function () {
     $response = $this->patch('/api/products/1', [], ['Accept' => 'application/json']);
