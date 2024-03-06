@@ -9,7 +9,8 @@ uses()->group('product');
 it('can not delete product if no authenticate', function () {
     $response = $this->delete('/api/products/1', [], ['Accept' => 'application/json']);
 
-    $response->assertStatus(401);
+    $response->assertUnauthorized();
+    $response->assertSee(['message' => 'Unauthenticated.']);
 });
 
 it('can not delete product not related to current user', function () {
@@ -19,7 +20,7 @@ it('can not delete product not related to current user', function () {
 
     $response = $this->delete('/api/products/' . $product->id, [], ['Accept' => 'application/json']);
 
-    $response->assertStatus(404);
+    $response->assertNotFound();
 });
 
 it('can delete product related to current user', function () {

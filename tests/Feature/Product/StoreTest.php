@@ -9,7 +9,8 @@ uses()->group('product');
 it('can not post product if no authenticate', function () {
     $response = $this->post('/api/products', [], ['Accept' => 'application/json']);
 
-    $response->assertStatus(401);
+    $response->assertUnauthorized();
+    $response->assertSee(['message' => 'Unauthenticated.']);
 });
 
 it('can post product related to current user', function () {

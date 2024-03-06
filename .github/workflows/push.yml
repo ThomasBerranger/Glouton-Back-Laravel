@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
@@ -38,5 +38,4 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/cegelem.sqlite
-        run: php artisan test
-#        run: php artisan test --coverage --min=100
+        run: php artisan test --coverage --min=100

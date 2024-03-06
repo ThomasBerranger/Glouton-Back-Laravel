@@ -10,7 +10,8 @@ uses()->group('product');
 it('can not get product if no authenticate', function () {
     $response = $this->get('/api/products/1', ['Accept' => 'application/json']);
 
-    $response->assertStatus(401);
+    $response->assertUnauthorized();
+    $response->assertSee(['message' => 'Unauthenticated.']);
 });
 
 it('can get product', function () {
@@ -22,7 +23,7 @@ it('can get product', function () {
 
     $response = $this->get('/api/products/' . $product->id, ['Accept' => 'application/json']);
 
-    $response->assertStatus(200);
+    $response->assertOk();
 });
 
 it('can get product expected fields', function () {
@@ -62,5 +63,5 @@ it('can not get other users products', function () {
 
     $response = $this->get('/api/products/' . $product->id, ['Accept' => 'application/json']);
 
-    $response->assertStatus(404);
+    $response->assertNotFound();
 });

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Authentication\AuthenticationController;
 use App\Http\Controllers\Authentication\RegisterController;
+use App\Http\Controllers\ExpirationDateController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +33,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('products', [ProductController::class, 'store']);
     Route::patch('products/{product}', [ProductController::class, 'update']);
     Route::delete('products/{product}', [ProductController::class, 'destroy']);
+
+    Route::post('expiration_dates', [ExpirationDateController::class, 'store']);
 });

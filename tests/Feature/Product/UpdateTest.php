@@ -9,7 +9,8 @@ uses()->group('product');
 it('can not update product if no authenticate', function () {
     $response = $this->patch('/api/products/1', [], ['Accept' => 'application/json']);
 
-    $response->assertStatus(401);
+    $response->assertUnauthorized();
+    $response->assertSee(['message' => 'Unauthenticated.']);
 });
 
 it('can not update product not related to current user', function () {
@@ -19,7 +20,7 @@ it('can not update product not related to current user', function () {
 
     $response = $this->patch('/api/products/' . $product->id, [], ['Accept' => 'application/json']);
 
-    $response->assertStatus(404);
+    $response->assertNotFound();
 });
 
 it('can update product related to current user', function () {

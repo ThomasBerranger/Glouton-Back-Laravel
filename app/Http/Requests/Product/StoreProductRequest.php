@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Product;
 
-use App\Http\Requests\StoreExpirationDateRequest;
+use App\Http\Requests\ExpirationDate\StoreExpirationDateRequest;
 use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
 

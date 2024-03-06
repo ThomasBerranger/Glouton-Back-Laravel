@@ -10,7 +10,8 @@ uses()->group('product');
 it('can not get products list if no authenticate', function () {
     $response = $this->get('/api/products', ['Accept' => 'application/json']);
 
-    $response->assertStatus(401);
+    $response->assertUnauthorized();
+    $response->assertSee(['message' => 'Unauthenticated.']);
 });
 
 it('can get products list', function () {
@@ -34,7 +35,7 @@ it('can not get other users products', function () {
 
     $response = $this->get('/api/products', ['Accept' => 'application/json']);
 
-    $response->assertStatus(200);
+    $response->assertOk();
     $response->assertJsonCount(0, 'data');
 });
 
@@ -53,7 +54,7 @@ it('can get products list filtered by week', function () {
 
     $response = $this->get('/api/products?filter[category]=week', ['Accept' => 'application/json']);
 
-    $response->assertStatus(200);
+    $response->assertOk();
     $response->assertJsonCount(1, 'data');
 });
 
@@ -76,7 +77,7 @@ it('can get products list filtered by month', function () {
 
     $response = $this->get('/api/products?filter[category]=month', ['Accept' => 'application/json']);
 
-    $response->assertStatus(200);
+    $response->assertOk();
     $response->assertJsonCount(1, 'data');
 });
 
@@ -95,7 +96,7 @@ it('can get products list filtered by years', function () {
 
     $response = $this->get('/api/products?filter[category]=years', ['Accept' => 'application/json']);
 
-    $response->assertStatus(200);
+    $response->assertOk();
     $response->assertJsonCount(1, 'data');
 });
 
@@ -110,7 +111,7 @@ it('can get products list filtered by finished', function () {
 
     $response = $this->get('/api/products?filter[category]=finished', ['Accept' => 'application/json']);
 
-    $response->assertStatus(200);
+    $response->assertOk();
     $response->assertJsonCount(1, 'data');
 });
 
@@ -125,7 +126,7 @@ it('can get products list filtered by to_purchase', function () {
 
     $response = $this->get('/api/products?filter[category]=to_purchase', ['Accept' => 'application/json']);
 
-    $response->assertStatus(200);
+    $response->assertOk();
     $response->assertJsonCount(1, 'data');
 });
 
@@ -170,7 +171,7 @@ it('can not get products list filtered with wrong filter', function () {
 
     $response = $this->get('/api/products?filter[wrong]', ['Accept' => 'application/json']);
 
-    $response->assertStatus(400);
+    $response->assertBadRequest();
     $response->assertJson(['error' => 'Filter unknown']);
 });
 
@@ -179,6 +180,6 @@ it('can not get products list filtered with wrong filter value', function () {
 
     $response = $this->get('/api/products?filter[category]=wrong', ['Accept' => 'application/json']);
 
-    $response->assertStatus(400);
+    $response->assertBadRequest();
     $response->assertJson(['error' => 'Category value unknown']);
 });
