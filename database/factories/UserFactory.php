@@ -32,7 +32,7 @@ class UserFactory extends Factory
 
     public function withToken(string $tokenName): static
     {
-        return $this->state(fn() => [])->afterCreating(function (User $user) use ($tokenName): void {
+        return $this->state(fn () => [])->afterCreating(function (User $user) use ($tokenName): void {
             $user->createToken($tokenName);
         });
     }

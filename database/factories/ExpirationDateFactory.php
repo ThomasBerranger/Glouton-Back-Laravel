@@ -17,7 +17,7 @@ class ExpirationDateFactory extends Factory
     public function definition(): array
     {
         return [
-            'date' => fake()->date('d/m/Y')
+            'date' => fake()->date('d/m/Y'),
         ];
     }
 }

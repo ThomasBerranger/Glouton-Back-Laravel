@@ -25,7 +25,7 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'code' => 'string|max:255|unique:'.Product::class,
+            'code' => 'string|max:255|unique:' . Product::class,
             'expiration_dates' => 'required|array|min:1',
             'expiration_dates.*.date' => StoreExpirationDateRequest::dateRules(),
             'description' => 'string',

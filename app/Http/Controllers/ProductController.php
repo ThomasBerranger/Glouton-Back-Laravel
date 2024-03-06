@@ -6,7 +6,6 @@ use App\Enums\Product\Filter;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
-use App\Models\ExpirationDate;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,9 +27,9 @@ class ProductController extends Controller
 
         $request = $request->toArray();
 
-        if (!array_key_exists('filter', $request)) {
+        if (! array_key_exists('filter', $request)) {
             return ProductResource::collection($user?->products()->groupedByMinExpirationDate()->orderedBy('closest_expiration_date')->get());
-        } else if (array_key_exists('category', $request['filter'])) {
+        } elseif (array_key_exists('category', $request['filter'])) {
             return match ($request['filter']['category']) {
                 Filter::WEEK->value => ProductResource::collection($user?->products()->notFinished()->week()->get()),
                 Filter::MONTH->value => ProductResource::collection($user?->products()->notFinished()->month()->get()),

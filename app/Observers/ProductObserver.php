@@ -2,8 +2,8 @@
 
 namespace App\Observers;
 
-use App\Actions\Product\FindHighestCustomCodeProduct;
 use App\Actions\Product\CalculateNextCustomCodeAction;
+use App\Actions\Product\FindHighestCustomCodeProduct;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +11,7 @@ class ProductObserver
 {
     public function creating(Product $product): void
     {
-        if (!$product->code) {
+        if (! $product->code) {
             $highestCustomCodeProduct = resolve(FindHighestCustomCodeProduct::class)();
             $product->code = resolve(CalculateNextCustomCodeAction::class)($highestCustomCodeProduct);
         }

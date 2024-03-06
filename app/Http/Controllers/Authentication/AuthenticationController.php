@@ -5,15 +5,16 @@ namespace App\Http\Controllers\Authentication;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\JsonResponse;
+use Throwable;
 
 class AuthenticationController extends Controller
 {
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function store(LoginRequest $request): JsonResponse
     {
@@ -21,7 +22,7 @@ class AuthenticationController extends Controller
 
         $user = $request->user();
 
-        throw_if(!$user);
+        throw_if(! $user);
 
         $user->tokens()->delete();
 
@@ -31,13 +32,13 @@ class AuthenticationController extends Controller
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function destroy(Request $request): Response
     {
         $user = Auth::user();
 
-        throw_if(!$user);
+        throw_if(! $user);
 
         $user->tokens()->delete();
 

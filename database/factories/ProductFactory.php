@@ -24,8 +24,8 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->word,
             'code' => fake()->randomElement([
-                (string)fake()->randomNumber(),
-                fake()->numerify(Product::CUSTOM_CODE_PREFIX . '###')
+                (string) fake()->randomNumber(),
+                fake()->numerify(Product::CUSTOM_CODE_PREFIX . '###'),
             ]),
             'user_id' => User::factory()->createQuietly(),
             'description' => fake()->optional()->sentence,

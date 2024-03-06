@@ -1,11 +1,7 @@
 <?php
 
-use App\Actions\Product\CalculateNextCustomCodeAction;
-use App\Actions\Product\FindHighestCustomCodeProduct;
-use App\Models\ExpirationDate;
 use App\Models\Product;
 use App\Models\User;
-use Carbon\Carbon;
 use Laravel\Sanctum\Sanctum;
 
 uses()->group('product');
@@ -25,7 +21,7 @@ it('can post product related to current user', function () {
         [
             'name' => fake()->name,
             'expiration_dates' => [
-                ['date' => fake()->date('d/m/Y')]
+                ['date' => fake()->date('d/m/Y')],
             ],
         ],
         ['Accept' => 'application/json']);
@@ -42,8 +38,8 @@ it('can post product', function () {
         [
             'name' => fake()->name,
             'code' => fake()->randomElement([
-                (string)fake()->randomNumber(),
-                fake()->numerify(Product::CUSTOM_CODE_PREFIX . '###')
+                (string) fake()->randomNumber(),
+                fake()->numerify(Product::CUSTOM_CODE_PREFIX . '###'),
             ]),
             'description' => fake()->sentence,
             'image' => fake()->url,
@@ -54,7 +50,7 @@ it('can post product', function () {
             'added_to_purchase_list_at' => fake()->dateTimeBetween('-1 month', '+1 year')->format('d/m/Y'),
             'expiration_dates' => [
                 ['date' => fake()->date('d/m/Y')],
-                ['date' => fake()->date('d/m/Y')]
+                ['date' => fake()->date('d/m/Y')],
             ],
         ],
         ['Accept' => 'application/json']);

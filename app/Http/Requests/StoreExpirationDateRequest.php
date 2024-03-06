@@ -7,14 +7,14 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreExpirationDateRequest extends FormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     public static function dateRules(): string
     {
         return 'required|date_format:d/m/Y';
+    }
+
+    public function authorize(): bool
+    {
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreExpirationDateRequest extends FormRequest
     {
         return [
             'product_id' => 'required|exists:' . Product::class . ',id',
-            'date' => self::dateRules()
+            'date' => self::dateRules(),
         ];
     }
 }

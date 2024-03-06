@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-         Product::class => ProductPolicy::class,
+        Product::class => ProductPolicy::class,
     ];
 
     /**
@@ -25,8 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-//        ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
-//            return config('app.frontend_url')."/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
-//        });
+        //        ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
+        //            return config('app.frontend_url')."/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
+        //        });
     }
 }

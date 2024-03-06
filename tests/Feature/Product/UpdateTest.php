@@ -1,11 +1,7 @@
 <?php
 
-use App\Actions\Product\CalculateNextCustomCodeAction;
-use App\Actions\Product\FindHighestCustomCodeProduct;
-use App\Models\ExpirationDate;
 use App\Models\Product;
 use App\Models\User;
-use Carbon\Carbon;
 use Laravel\Sanctum\Sanctum;
 
 uses()->group('product');
@@ -53,8 +49,8 @@ it('can update product', function () {
         [
             'name' => fake()->name,
             'code' => fake()->randomElement([
-                (string)fake()->randomNumber(),
-                fake()->numerify(Product::CUSTOM_CODE_PREFIX . '###')
+                (string) fake()->randomNumber(),
+                fake()->numerify(Product::CUSTOM_CODE_PREFIX . '###'),
             ]),
             'description' => fake()->sentence,
             'image' => fake()->url,
@@ -65,7 +61,7 @@ it('can update product', function () {
             'added_to_purchase_list_at' => fake()->dateTimeBetween('-1 month', '+1 year')->format('d/m/Y'),
             'expiration_dates' => [
                 ['date' => fake()->date('d/m/Y')],
-                ['date' => fake()->date('d/m/Y')]
+                ['date' => fake()->date('d/m/Y')],
             ],
         ],
         ['Accept' => 'application/json']);
@@ -98,17 +94,17 @@ it('can not update product with invalid data', function (array $invalidBody) {
     $response->assertUnprocessable();
 })->with([[
     ['name' => null, 'expiration_dates' => [['date' => fake()->date('d/m/Y')]]],
-    ['name' => 123,'expiration_dates' => [['date' => fake()->date('d/m/Y')]]],
-    ['name' => 'banana','expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'description' => 123],
-    ['name' => 'banana','expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'image' => 123],
-    ['name' => 'banana','expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'nutriscore' => 123],
-    ['name' => 'banana','expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'nutriscore' => 'ab'],
-    ['name' => 'banana','expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'novagroup' => ''],
-    ['name' => 'banana','expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'novagroup' => 5],
-    ['name' => 'banana','expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'ecoscore' => 123],
-    ['name' => 'banana','expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'ecoscore' => 'ab'],
-    ['name' => 'banana','expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'finished_at' => 1],
-    ['name' => 'banana','expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'finished_at' => '2024/01/01'],
-    ['name' => 'banana','to_purchase' => [['date' => fake()->date('d/m/Y')]], 'finished_at' => 1],
-    ['name' => 'banana','to_purchase' => [['date' => fake()->date('d/m/Y')]], 'finished_at' => '2024/01/01'],
+    ['name' => 123, 'expiration_dates' => [['date' => fake()->date('d/m/Y')]]],
+    ['name' => 'banana', 'expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'description' => 123],
+    ['name' => 'banana', 'expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'image' => 123],
+    ['name' => 'banana', 'expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'nutriscore' => 123],
+    ['name' => 'banana', 'expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'nutriscore' => 'ab'],
+    ['name' => 'banana', 'expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'novagroup' => ''],
+    ['name' => 'banana', 'expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'novagroup' => 5],
+    ['name' => 'banana', 'expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'ecoscore' => 123],
+    ['name' => 'banana', 'expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'ecoscore' => 'ab'],
+    ['name' => 'banana', 'expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'finished_at' => 1],
+    ['name' => 'banana', 'expiration_dates' => [['date' => fake()->date('d/m/Y')]], 'finished_at' => '2024/01/01'],
+    ['name' => 'banana', 'to_purchase' => [['date' => fake()->date('d/m/Y')]], 'finished_at' => 1],
+    ['name' => 'banana', 'to_purchase' => [['date' => fake()->date('d/m/Y')]], 'finished_at' => '2024/01/01'],
 ]]);

@@ -1,8 +1,5 @@
 <?php
 
-use App\Actions\Product\CalculateNextCustomCodeAction;
-use App\Actions\Product\FindHighestCustomCodeProduct;
-use App\Models\ExpirationDate;
 use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
@@ -164,7 +161,7 @@ it('can get products expected fields', function () {
                     'novagroup' => $product->novagroup,
                     'nutriscore' => $product->nutriscore,
                 ];
-            })
+            }),
     ]);
 });
 

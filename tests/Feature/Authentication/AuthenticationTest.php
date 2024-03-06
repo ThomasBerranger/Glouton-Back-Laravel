@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use Tests\TestCase;
 
 uses()->group('authentication');
 
@@ -17,7 +16,7 @@ it('users can authenticate using their token', function () {
     $this->assertDatabaseHas('personal_access_tokens', [
         'tokenable_type' => User::class,
         'name' => 'login',
-        'abilities' => '["*"]'
+        'abilities' => '["*"]',
     ]);
 
     $response->assertHeader('Content-Type', 'application/json');

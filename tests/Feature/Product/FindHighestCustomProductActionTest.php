@@ -1,6 +1,5 @@
 <?php
 
-use App\Actions\Product\CalculateNextCustomCodeAction;
 use App\Actions\Product\FindHighestCustomCodeProduct;
 use App\Models\Product;
 

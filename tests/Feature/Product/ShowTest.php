@@ -1,11 +1,8 @@
 <?php
 
-use App\Actions\Product\CalculateNextCustomCodeAction;
-use App\Actions\Product\FindHighestCustomCodeProduct;
 use App\Models\ExpirationDate;
 use App\Models\Product;
 use App\Models\User;
-use Carbon\Carbon;
 use Laravel\Sanctum\Sanctum;
 
 uses()->group('product');
@@ -54,7 +51,7 @@ it('can get product expected fields', function () {
             'added_to_purchase_list_at' => $product->added_to_purchase_list_at,
             'closest_expiration_date' => $product->closest_expiration_date,
             'expiration_date_count' => $product->expiration_date_count,
-        ]
+        ],
     ]);
 });
 

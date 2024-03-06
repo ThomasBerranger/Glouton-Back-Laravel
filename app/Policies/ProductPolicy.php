@@ -33,13 +33,13 @@ class ProductPolicy
         return $user->id === $product->user_id ? Response::allow() : Response::denyWithStatus(404);
     }
 
-//    public function restore(User $user, ProductScope $product): Response
-//    {
-//        return $user->id === $product->user_id ? Response::allow() : Response::denyWithStatus(404);
-//    }
-//
-//    public function forceDelete(User $user, ProductScope $product): Response
-//    {
-//        return $user->id === $product->user_id ? Response::allow() : Response::denyWithStatus(404);
-//    }
+    //    public function restore(User $user, ProductScope $product): Response
+    //    {
+    //        return $user->id === $product->user_id ? Response::allow() : Response::denyWithStatus(404);
+    //    }
+    //
+    //    public function forceDelete(User $user, ProductScope $product): Response
+    //    {
+    //        return $user->id === $product->user_id ? Response::allow() : Response::denyWithStatus(404);
+    //    }
 }
