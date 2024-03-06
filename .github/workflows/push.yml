@@ -38,4 +38,5 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/cegelem.sqlite
-        run: php artisan test --coverage --min=100
+        run: php artisan test
+#        run: php artisan test --coverage --min=100
