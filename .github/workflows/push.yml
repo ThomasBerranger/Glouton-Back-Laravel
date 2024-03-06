@@ -1,0 +1,41 @@
+name: Tests
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [ '8.2' ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Execute Duster
+        run: ./vendor/bin/duster lint
+
+      - name: Execute PHPStan
+        run: ./vendor/bin/phpstan analyse app
+
+      - name: Create Database
+        run: |
+          mkdir -p database
+          touch database/cegelem.sqlite
+
+      - name: Execute tests
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/cegelem.sqlite
+        run: php artisan test --coverage --min=100
