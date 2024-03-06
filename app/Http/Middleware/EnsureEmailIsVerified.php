@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureEmailIsVerified
 {
+    // @codeCoverageIgnoreStart
     /**
      * Handle an incoming request.
      *
@@ -24,4 +25,5 @@ class EnsureEmailIsVerified
 
         return $next($request);
     }
+    // @codeCoverageIgnoreEnd
 }

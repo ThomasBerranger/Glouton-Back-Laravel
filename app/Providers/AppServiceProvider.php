@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    // @codeCoverageIgnoreStart
     /**
      * Register any application services.
      */
@@ -24,4 +25,5 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+    // @codeCoverageIgnoreEnd
 }

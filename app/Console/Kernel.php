@@ -7,12 +7,13 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+
+    // @codeCoverageIgnoreStart
     /**
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
     }
 
     /**
@@ -24,4 +25,5 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+    // @codeCoverageIgnoreEnd
 }

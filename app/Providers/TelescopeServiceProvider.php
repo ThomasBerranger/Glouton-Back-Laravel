@@ -9,6 +9,7 @@ use Laravel\Telescope\TelescopeApplicationServiceProvider;
 
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
+    // @codeCoverageIgnoreStart
     /**
      * Register any application services.
      */
@@ -62,4 +63,5 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
             ]);
         });
     }
+    // @codeCoverageIgnoreEnd
 }

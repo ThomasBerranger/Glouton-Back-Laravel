@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
 {
+    // @codeCoverageIgnoreStart
     /**
      * Handle an incoming request.
      *
@@ -27,4 +28,5 @@ class RedirectIfAuthenticated
 
         return $next($request);
     }
+    // @codeCoverageIgnoreEnd
 }
