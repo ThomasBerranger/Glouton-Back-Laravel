@@ -7,7 +7,7 @@ uses()->group('product');
 
 it('can get the next custom code product', function (?string $highestCustomCode, string $nextCustomCodeExpected) {
     if ($highestCustomCode) {
-        $product = new Product();
+        $product = new Product;
 
         $product->code = $highestCustomCode;
 
