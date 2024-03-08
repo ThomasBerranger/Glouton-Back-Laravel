@@ -8,17 +8,17 @@ use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): true
     {
         return true;
     }
 
     public function view(User $user, Product $product): Response
     {
-        return $user->id === $product->user_id ? Response::allow() : Response::denyWithStatus(404);
+        return $user->id === $product->user_id ? Response::allow() : Response::denyWithStatus(404); //todo: create a static private function
     }
 
-    public function create(User $user): bool
+    public function create(User $user): true
     {
         return true;
     }

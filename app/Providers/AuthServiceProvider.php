@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\ExpirationDate;
 use App\Models\Product;
+use App\Policies\ExpirationDatePolicy;
 use App\Policies\ProductPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Product::class => ProductPolicy::class,
+        ExpirationDate::class => ExpirationDatePolicy::class,
     ];
 
     /**

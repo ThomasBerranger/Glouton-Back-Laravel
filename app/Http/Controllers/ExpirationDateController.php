@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class ExpirationDateController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(ExpirationDate::class, 'product');
+    }
+
 //    public function index(): void
 //    {
 //    }
@@ -20,19 +25,19 @@ class ExpirationDateController extends Controller
         return ExpirationDatesResource::make($expirationDate);
     }
 
-//    public function show(ExpirationDate $expirationDate): void
+//    public function show(ExpirationDatePolicy $expirationDate): void
 //    {
 //    }
 
-//    public function edit(ExpirationDate $expirationDate): void
+//    public function edit(ExpirationDatePolicy $expirationDate): void
 //    {
 //    }
 
-//    public function update(Request $request, ExpirationDate $expirationDate): void
+//    public function update(Request $request, ExpirationDatePolicy $expirationDate): void
 //    {
 //    }
 
-//    public function destroy(ExpirationDate $expirationDate): void
+//    public function destroy(ExpirationDatePolicy $expirationDate): void
 //    {
 //    }
 }
