@@ -23,7 +23,7 @@ class StoreExpirationDateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => 'required|exists:' . Product::class . ',id',
+            'product_id' => 'required|string|exists:' . Product::class . ',id',
             'date' => self::dateRules(),
         ];
     }

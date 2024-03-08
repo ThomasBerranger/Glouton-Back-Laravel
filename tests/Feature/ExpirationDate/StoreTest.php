@@ -31,7 +31,7 @@ it('can not post expiration date not related to product not related to current u
 
     Sanctum::actingAs(User::factory()->createQuietly());
 
-    $response = $this->post('/api/expiration_dates', ['product_id' => $product->id, 'date' => '01/01/2024'], ['Accept' => 'application/json']);
+    $response = $this->post('/api/expiration_dates', ['product_id' => (string) $product->id, 'date' => '01/01/2024'], ['Accept' => 'application/json']);
 
     $response->assertNotFound();
     $response->assertSee(['message' => 'Product not found.']);
@@ -46,7 +46,7 @@ it('can post expiration date', function () {
 
     $response = $this->post('/api/expiration_dates',
         [
-            'product_id' => $product->id,
+            'product_id' => (string) $product->id,
             'date' => fake()->date('d/m/Y'),
         ],
         ['Accept' => 'application/json']
@@ -68,6 +68,9 @@ it('can not expiration date with invalid data', function (array $invalidBody) {
 
     $response->assertUnprocessable();
 })->with([[
+    ['product_id' => null, 'date' => fake()->date('d/m/Y')],
+    ['product_id' => '', 'date' => fake()->date('d/m/Y')],
+    ['product_id' => 1, 'date' => fake()->date('d/m/Y')],
     ['product_id' => '1', 'date' => null],
     ['product_id' => '1', 'date' => ''],
     ['product_id' => '1', 'date' => fake()->date('Y-m-d')],

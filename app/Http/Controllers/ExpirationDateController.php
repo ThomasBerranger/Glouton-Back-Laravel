@@ -14,9 +14,9 @@ class ExpirationDateController extends Controller
         $this->authorizeResource(ExpirationDate::class, 'product');
     }
 
-//    public function index(): void
-//    {
-//    }
+    //    public function index(): void
+    //    {
+    //    }
 
     public function store(StoreExpirationDateRequest $request): ExpirationDatesResource
     {
@@ -25,19 +25,19 @@ class ExpirationDateController extends Controller
         return ExpirationDatesResource::make($expirationDate);
     }
 
-//    public function show(ExpirationDatePolicy $expirationDate): void
-//    {
-//    }
+    //    public function show(ExpirationDatePolicy $expirationDate): void
+    //    {
+    //    }
 
-//    public function edit(ExpirationDatePolicy $expirationDate): void
-//    {
-//    }
+    //    public function edit(ExpirationDatePolicy $expirationDate): void
+    //    {
+    //    }
 
-//    public function update(Request $request, ExpirationDatePolicy $expirationDate): void
-//    {
-//    }
+    //    public function update(Request $request, ExpirationDatePolicy $expirationDate): void
+    //    {
+    //    }
 
-//    public function destroy(ExpirationDatePolicy $expirationDate): void
-//    {
-//    }
+    //    public function destroy(ExpirationDatePolicy $expirationDate): void
+    //    {
+    //    }
 }

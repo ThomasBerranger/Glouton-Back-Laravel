@@ -17,10 +17,10 @@ class ExpirationDate extends Model
         'date',
     ];
 
-//    public function product(): BelongsTo
-//    {
-//        return $this->belongsTo(Product::class);
-//    }
+    //    public function product(): BelongsTo
+    //    {
+    //        return $this->belongsTo(Product::class);
+    //    }
 
     public function date(): Attribute
     {
