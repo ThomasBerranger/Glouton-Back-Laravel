@@ -7,7 +7,9 @@ uses()->group('product');
 
 it('can get the next custom code product', function (?string $highestCustomCode, string $nextCustomCodeExpected) {
     if ($highestCustomCode) {
-        $product = Product::factory()->makeOne(['code' => $highestCustomCode]);
+        $product = new Product();
+
+        $product->code = $highestCustomCode;
 
         expect(resolve(CalculateNextCustomCodeAction::class)($product))->toBeString()->toBe($nextCustomCodeExpected);
     } else {
