@@ -6,6 +6,7 @@ use App\Http\Requests\ExpirationDate\StoreExpirationDateRequest;
 use App\Http\Requests\ExpirationDate\UpdateExpirationDateRequest;
 use App\Http\Resources\ExpirationDatesResource;
 use App\Models\ExpirationDate;
+use Illuminate\Http\Response;
 
 class ExpirationDateController extends Controller
 {
@@ -26,5 +27,12 @@ class ExpirationDateController extends Controller
         $expirationDate->update($request->validated());
 
         return ExpirationDatesResource::make($expirationDate);
+    }
+
+    public function destroy(ExpirationDate $expirationDate): Response
+    {
+        $expirationDate->delete();
+
+        return response()->noContent();
     }
 }

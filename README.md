@@ -10,7 +10,7 @@
 - [x] Intégration de duster 
 - [x] Création des premiers tests
 - [x] Mise en place d'un Github Action lors de push
-- [ ] Post, Update et Delete d'ExpirationDate 
+- [x] Post, Update et Delete d'ExpirationDate 
 - [ ] Implémentation de la création de recettes
 
 ### Dependencies installation

@@ -37,10 +37,10 @@ class ExpirationDatePolicy
         return self::isCurrentUserRelatedToExpirationDateProduct($user, $expirationDate->product);
     }
 
-    //    public function delete(User $user, ExpirationDate $expirationDate): Response
-    //    {
-    //        return $user->id === $expirationDate->product->user->id ? Response::allow() : Response::denyWithStatus(404);
-    //    }
+    public function delete(User $user, ExpirationDate $expirationDate): Response
+    {
+        return self::isCurrentUserRelatedToExpirationDateProduct($user, $expirationDate->product);
+    }
 
     //    public function restore(User $user, ExpirationDate $expirationDate): bool
     //    {
