@@ -70,7 +70,7 @@ it('can update product', function () {
     $response->assertOk();
 });
 
-it('can not update unexpected data', function () {
+it('can not update product with unexpected data', function () {
     $user = User::factory()->createQuietly();
 
     Sanctum::actingAs($user);

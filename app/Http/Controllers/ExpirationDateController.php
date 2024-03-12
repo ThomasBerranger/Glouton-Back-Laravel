@@ -3,20 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ExpirationDate\StoreExpirationDateRequest;
+use App\Http\Requests\ExpirationDate\UpdateExpirationDateRequest;
 use App\Http\Resources\ExpirationDatesResource;
 use App\Models\ExpirationDate;
-use Illuminate\Http\Request;
 
 class ExpirationDateController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(ExpirationDate::class, 'product');
+        $this->authorizeResource(ExpirationDate::class, 'expirationDate');
     }
-
-    //    public function index(): void
-    //    {
-    //    }
 
     public function store(StoreExpirationDateRequest $request): ExpirationDatesResource
     {
@@ -25,19 +21,10 @@ class ExpirationDateController extends Controller
         return ExpirationDatesResource::make($expirationDate);
     }
 
-    //    public function show(ExpirationDatePolicy $expirationDate): void
-    //    {
-    //    }
+    public function update(UpdateExpirationDateRequest $request, ExpirationDate $expirationDate): ExpirationDatesResource
+    {
+        $expirationDate->update($request->validated());
 
-    //    public function edit(ExpirationDatePolicy $expirationDate): void
-    //    {
-    //    }
-
-    //    public function update(Request $request, ExpirationDatePolicy $expirationDate): void
-    //    {
-    //    }
-
-    //    public function destroy(ExpirationDatePolicy $expirationDate): void
-    //    {
-    //    }
+        return ExpirationDatesResource::make($expirationDate);
+    }
 }

@@ -35,4 +35,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('products/{product}', [ProductController::class, 'destroy']);
 
     Route::post('expiration_dates', [ExpirationDateController::class, 'store']);
+    Route::patch('expiration_dates/{expirationDate}', [ExpirationDateController::class, 'update']);
 });

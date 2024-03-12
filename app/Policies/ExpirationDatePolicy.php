@@ -6,7 +6,6 @@ use App\Models\ExpirationDate;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
-use Throwable;
 
 class ExpirationDatePolicy
 {
@@ -20,9 +19,6 @@ class ExpirationDatePolicy
     //        return $user->id === $expirationDate->product->user->id ? Response::allow() : Response::denyWithStatus(404);
     //    }
 
-    /**
-     * @throws Throwable
-     */
     public function create(User $user): Response
     {
         $productId = request()->product_id;
@@ -33,15 +29,13 @@ class ExpirationDatePolicy
 
         $expirationDateRelatedProduct = Product::find($productId);
 
-        return $expirationDateRelatedProduct ?
-            self::isCurrentUserRelatedToExpirationDateProduct($user, $expirationDateRelatedProduct) :
-            Response::denyWithStatus(404, 'Product not found.');
+        return self::isCurrentUserRelatedToExpirationDateProduct($user, $expirationDateRelatedProduct);
     }
 
-    //    public function update(User $user, ExpirationDate $expirationDate): Response
-    //    {
-    //        return $user->id === $expirationDate->product->user->id ? Response::allow() : Response::denyWithStatus(404);
-    //    }
+    public function update(User $user, ExpirationDate $expirationDate): Response
+    {
+        return self::isCurrentUserRelatedToExpirationDateProduct($user, $expirationDate->product);
+    }
 
     //    public function delete(User $user, ExpirationDate $expirationDate): Response
     //    {
@@ -56,8 +50,8 @@ class ExpirationDatePolicy
     //    {
     //    }
 
-    private function isCurrentUserRelatedToExpirationDateProduct(User $currentUser, Product $product): Response
+    private function isCurrentUserRelatedToExpirationDateProduct(User $currentUser, ?Product $product): Response
     {
-        return $currentUser->id === $product->user?->id ? Response::allow() : Response::denyWithStatus(404, 'Product not found.');
+        return $product && $currentUser->id === $product->user?->id ? Response::allow() : Response::denyWithStatus(404, 'Product not found.');
     }
 }
