@@ -18,7 +18,7 @@ it('can not update expiration date not related to current user products', functi
 
     $product = Product::factory()->hasExpirationDates()->createQuietly();
 
-    $response = $this->patch('/api/expiration_dates/' . $product->expirationDates->first()->id, [], ['Accept' => 'application/json']);
+    $response = $this->patch('/api/expiration_dates/' . $product->latestExpirationDate->id, [], ['Accept' => 'application/json']);
 
     $response->assertNotFound();
 });
@@ -30,7 +30,7 @@ it('can update product related to current user products', function () {
 
     $product = Product::factory(['user_id' => $user->id])->hasExpirationDates()->createQuietly();
 
-    $response = $this->patch('/api/expiration_dates/' . $product->expirationDates->first()->id,
+    $response = $this->patch('/api/expiration_dates/' . $product->latestExpirationDate->id,
         [
             'date' => fake()->date('d/m/Y'),
         ],
@@ -46,7 +46,7 @@ it('can not update expiration date with unexpected data', function () {
 
     $product = Product::factory(['user_id' => $user->id])->hasExpirationDates()->createQuietly();
 
-    $this->patch('/api/expiration_dates/' . $product->expirationDates->first()->id,
+    $this->patch('/api/expiration_dates/' . $product->latestExpirationDate->id,
         [
             'product_id' => '666',
             'date' => '01/04/2025',
@@ -54,7 +54,7 @@ it('can not update expiration date with unexpected data', function () {
         ['Accept' => 'application/json']
     );
 
-    $this->assertDatabaseHas('expiration_dates', ['product_id' => $product->expirationDates->first()->id, 'date' => '2025-04-01']);
+    $this->assertDatabaseHas('expiration_dates', ['product_id' => $product->latestExpirationDate->id, 'date' => '2025-04-01']);
     $this->assertDatabaseMissing('products', ['product_id' => '666', 'date' => '01/04/2025']);
 });
 
@@ -65,7 +65,7 @@ it('can not update expiration date with invalid data', function (array $invalidB
 
     $product = Product::factory(['user_id' => $user->id])->hasExpirationDates()->createQuietly();
 
-    $response = $this->patch('/api/expiration_dates/' . $product->expirationDates->first()->id, $invalidBody, ['Accept' => 'application/json']);
+    $response = $this->patch('/api/expiration_dates/' . $product->latestExpirationDate->id, $invalidBody, ['Accept' => 'application/json']);
 
     $response->assertUnprocessable();
 })->with([[

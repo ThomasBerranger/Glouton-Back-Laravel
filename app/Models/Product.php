@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -28,6 +29,11 @@ class Product extends Model
     public function expirationDates(): HasMany
     {
         return $this->hasMany(ExpirationDate::class);
+    }
+
+    public function latestExpirationDate(): HasOne
+    {
+        return $this->hasOne(ExpirationDate::class)->latestOfMany('date');
     }
 
     protected function finishedAt(): Attribute

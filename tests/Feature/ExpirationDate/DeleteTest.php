@@ -18,7 +18,7 @@ it('can not delete expiration date not related to current user products', functi
 
     $product = Product::factory()->hasExpirationDates()->createQuietly();
 
-    $response = $this->delete('/api/expiration_dates/' . $product->expirationDates->first()->id, [], ['Accept' => 'application/json']);
+    $response = $this->delete('/api/expiration_dates/' . $product->latestExpirationDate->id, [], ['Accept' => 'application/json']);
 
     $response->assertNotFound();
 });
@@ -30,10 +30,8 @@ it('can delete product related to current user', function () {
 
     $product = Product::factory()->hasExpirationDates()->createQuietly(['user_id' => $user->id]);
 
-    $expirationDate = $product->expirationDates->first();
-
-    $response = $this->delete('/api/expiration_dates/' . $expirationDate->id, [], ['Accept' => 'application/json']);
+    $response = $this->delete('/api/expiration_dates/' . $product->latestExpirationDate->id, [], ['Accept' => 'application/json']);
 
     $response->assertNoContent();
-    $this->assertModelMissing($expirationDate);
+    $this->assertModelMissing($product->latestExpirationDate);
 });
