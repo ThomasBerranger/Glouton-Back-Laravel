@@ -4,6 +4,7 @@ use App\Http\Controllers\Authentication\AuthenticationController;
 use App\Http\Controllers\Authentication\RegisterController;
 use App\Http\Controllers\ExpirationDateController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,13 +29,20 @@ Route::controller(AuthenticationController::class)->group(function () {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('products/{product}', [ProductController::class, 'show']);
-    Route::get('products', [ProductController::class, 'index']);
-    Route::post('products', [ProductController::class, 'store']);
-    Route::patch('products/{product}', [ProductController::class, 'update']);
-    Route::delete('products/{product}', [ProductController::class, 'destroy']);
-
-    Route::post('expiration_dates', [ExpirationDateController::class, 'store']);
-    Route::patch('expiration_dates/{expirationDate}', [ExpirationDateController::class, 'update']);
-    Route::delete('expiration_dates/{expirationDate}', [ExpirationDateController::class, 'destroy']);
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('products', 'index');
+        Route::get('products/{product}', 'show');
+        Route::post('products', 'store');
+        Route::patch('products/{product}', 'update');
+        Route::delete('products/{product}', 'destroy');
+    });
+    Route::controller(ExpirationDateController::class)->group(function () {
+        Route::post('expiration_dates', 'store');
+        Route::patch('expiration_dates/{expirationDate}', 'update');
+        Route::delete('expiration_dates/{expirationDate}', 'destroy');
+    });
+    Route::controller(RecipeController::class)->group(function () {
+        Route::get('recipes', 'index');
+        Route::post('recipes', 'store');
+    });
 });

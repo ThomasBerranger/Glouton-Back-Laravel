@@ -32,7 +32,7 @@ it('can update product related to current user', function () {
 
     $response = $this->patch('/api/products/' . $product->id,
         [
-            'name' => fake()->name,
+            'name' => fake()->word,
         ],
         ['Accept' => 'application/json']);
 
@@ -48,7 +48,7 @@ it('can update product', function () {
 
     $response = $this->patch('/api/products/' . $product->id,
         [
-            'name' => fake()->name,
+            'name' => fake()->word,
             'code' => fake()->randomElement([
                 (string) fake()->randomNumber(),
                 fake()->numerify(Product::CUSTOM_CODE_PREFIX . '###'),

@@ -20,7 +20,7 @@ it('can post product related to current user', function () {
 
     $response = $this->post('/api/products',
         [
-            'name' => fake()->name,
+            'name' => fake()->word,
             'expiration_dates' => [
                 ['date' => fake()->date('d/m/Y')],
             ],
@@ -37,7 +37,7 @@ it('can post product', function () {
 
     $response = $this->post('/api/products',
         [
-            'name' => fake()->name,
+            'name' => fake()->word,
             'code' => fake()->randomElement([
                 (string) fake()->randomNumber(),
                 fake()->numerify(Product::CUSTOM_CODE_PREFIX . '###'),

@@ -10,4 +10,7 @@ class ProductRecipe extends Model
     use HasFactory;
 
     protected $table = 'products_recipes';
+
+    // HasOneProduct
+    // HasOneRecipe
 }
