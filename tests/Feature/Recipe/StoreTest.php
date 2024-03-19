@@ -41,7 +41,7 @@ it('can post recipe', function () {
     $response->assertCreated();
 });
 
-it('can not post product with invalid data', function (array $invalidBody) {
+it('can not post recipe with invalid data', function (array $invalidBody) {
     Sanctum::actingAs(User::factory()->createQuietly());
 
     $response = $this->post('/api/recipes', $invalidBody, ['Accept' => 'application/json']);

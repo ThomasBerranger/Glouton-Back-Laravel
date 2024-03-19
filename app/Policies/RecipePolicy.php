@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Recipe;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
 class RecipePolicy
 {
@@ -17,8 +18,8 @@ class RecipePolicy
         return true;
     }
 
-    public function delete(User $user, Recipe $recipe): bool
+    public function delete(User $user, Recipe $recipe): Response
     {
-        return $user->id === $recipe->user->id;
+        return $user->id === $recipe->user->id ? Response::allow() : Response::denyWithStatus(404);
     }
 }

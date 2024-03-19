@@ -23,7 +23,7 @@ class ExpirationDatePolicy
     {
         $productId = request()->product_id;
 
-        if (!is_string($productId)) {
+        if (! is_string($productId)) {
             return Response::denyWithStatus(422, 'product_id must be a string.');
         }
 

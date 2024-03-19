@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\ExpirationDate;
 use App\Models\Product;
 use App\Models\ProductRecipe;
 use App\Models\Recipe;
@@ -24,15 +23,15 @@ it('can get productRecipe', function () {
     $productRecipe = ProductRecipe::factory(
         [
             'recipe_id' => Recipe::factory([
-                'user_id' => $user
+                'user_id' => $user,
             ]),
             'product_id' => Product::factory([
-                'user_id' => $user
-            ])
+                'user_id' => $user,
+            ]),
         ]
     )->createQuietly();
 
-//    dd($user->id, $productRecipe->user()->get()->id);
+    //    dd($user->id, $productRecipe->user()->get()->id);
 
     $response = $this->get('/api/products_recipes/' . $productRecipe->id, ['Accept' => 'application/json']);
 

@@ -4,7 +4,7 @@ use App\Models\Product;
 use App\Models\Recipe;
 use Carbon\Carbon;
 
-uses()->group('test');
+uses()->group('recipe');
 
 it('determine a recipe available with product not finished', function () {
     $recipe = Recipe::factory()->createQuietly();

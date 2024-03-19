@@ -24,8 +24,8 @@ it('can post productRecipe', function () {
 
     $response = $this->post('/api/products_recipes',
         [
-            "product_id" => (string)$product->id,
-            "recipe_id" => (string)$recipe->id,
+            'product_id' => (string) $product->id,
+            'recipe_id' => (string) $recipe->id,
             'quantity' => fake()->randomFloat(2),
             'quantity_unity' => fake()->word,
         ],
@@ -43,8 +43,8 @@ it('can not post productRecipe if current user not related to product', function
     $recipe = Recipe::factory()->createQuietly(['user_id' => $user]);
 
     $body = [
-        'product_id' => (string)$product->id,
-        'recipe_id' => (string)$recipe->id,
+        'product_id' => (string) $product->id,
+        'recipe_id' => (string) $recipe->id,
         'quantity' => fake()->randomFloat(2),
         'quantity_unity' => fake()->word,
     ];
@@ -63,8 +63,8 @@ it('can not post productRecipe if current user not related to recipe', function 
     $recipe = Recipe::factory()->createQuietly();
 
     $body = [
-        'product_id' => (string)$product->id,
-        'recipe_id' => (string)$recipe->id,
+        'product_id' => (string) $product->id,
+        'recipe_id' => (string) $recipe->id,
         'quantity' => fake()->randomFloat(2),
         'quantity_unity' => fake()->word,
     ];

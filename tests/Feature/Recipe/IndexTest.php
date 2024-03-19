@@ -59,7 +59,7 @@ it('can get recipes expected fields', function () {
                     'description' => $recipe->description,
                     'id' => $recipe->id,
                     'name' => $recipe->name,
-                    'productsRecipes' => $recipe->productsRecipes->map(fn($productRecipe) => [
+                    'productsRecipes' => $recipe->productsRecipes->map(fn ($productRecipe) => [
                         'id' => $productRecipe->id,
                         'product' => [
                             'added_to_purchase_list_at' => $productRecipe->product->added_to_purchase_list_at,
@@ -78,7 +78,7 @@ it('can get recipes expected fields', function () {
                         'quantity' => $productRecipe->quantity,
                         'quantity_unity' => $productRecipe->quantity_unity,
                     ]),
-                    'user' => ['name' => $recipe->user->name]
+                    'user' => ['name' => $recipe->user->name],
                 ];
             }),
     ]);
