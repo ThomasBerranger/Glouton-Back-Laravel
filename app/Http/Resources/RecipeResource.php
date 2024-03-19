@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,6 +17,9 @@ class RecipeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'available' => $this->isAvailable(),
+            'user' => UserResource::make($this->user),
+            'productsRecipes' => ProductRecipeResource::collection($this->productsRecipes),
         ];
     }
 }

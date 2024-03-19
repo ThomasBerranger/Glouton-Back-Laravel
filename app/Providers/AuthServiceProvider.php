@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Models\ExpirationDate;
 use App\Models\Product;
+use App\Models\ProductRecipe;
 use App\Models\Recipe;
 use App\Policies\ExpirationDatePolicy;
 use App\Policies\ProductPolicy;
+use App\Policies\ProductRecipePolicy;
 use App\Policies\RecipePolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -22,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         Product::class => ProductPolicy::class,
         ExpirationDate::class => ExpirationDatePolicy::class,
         Recipe::class => RecipePolicy::class,
+        ProductRecipe::class => ProductRecipePolicy::class,
     ];
 
     /**

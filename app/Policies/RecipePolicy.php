@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Recipe;
 use App\Models\User;
 
 class RecipePolicy
@@ -14,5 +15,10 @@ class RecipePolicy
     public function create(User $user): true
     {
         return true;
+    }
+
+    public function delete(User $user, Recipe $recipe): bool
+    {
+        return $user->id === $recipe->user->id;
     }
 }

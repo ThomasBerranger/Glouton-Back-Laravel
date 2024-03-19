@@ -4,6 +4,7 @@ use App\Http\Controllers\Authentication\AuthenticationController;
 use App\Http\Controllers\Authentication\RegisterController;
 use App\Http\Controllers\ExpirationDateController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductRecipeController;
 use App\Http\Controllers\RecipeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,5 +45,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(RecipeController::class)->group(function () {
         Route::get('recipes', 'index');
         Route::post('recipes', 'store');
+        Route::delete('recipe/{recipe}', 'destroy');
+    });
+    Route::controller(ProductRecipeController::class)->group(function () {
+        Route::get('products_recipes/{productRecipe}', 'show');
+        Route::post('products_recipes', 'store');
+        Route::delete('products_recipes/{productRecipe}', 'destroy');
     });
 });

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
+use App\Models\Recipe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class ProductRecipeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'product_id' => Product::factory()->createQuietly(),
+            'recipe_id' => Recipe::factory()->createQuietly(),
+            'quantity' => fake()->randomFloat(2),
+            'quantity_unity' => fake()->optional()->word,
         ];
     }
 }

@@ -23,7 +23,7 @@ class ExpirationDatePolicy
     {
         $productId = request()->product_id;
 
-        if (! is_string($productId)) {
+        if (!is_string($productId)) {
             return Response::denyWithStatus(422, 'product_id must be a string.');
         }
 
@@ -42,14 +42,7 @@ class ExpirationDatePolicy
         return self::isCurrentUserRelatedToExpirationDateProduct($user, $expirationDate->product);
     }
 
-    //    public function restore(User $user, ExpirationDate $expirationDate): bool
-    //    {
-    //    }
-
-    //    public function forceDelete(User $user, ExpirationDate $expirationDate): bool
-    //    {
-    //    }
-
+    // todo: simplifier comme ndans ProductRecipePolicy
     private function isCurrentUserRelatedToExpirationDateProduct(User $currentUser, ?Product $product): Response
     {
         return $product && $currentUser->id === $product->user?->id ? Response::allow() : Response::denyWithStatus(404, 'Product not found.');

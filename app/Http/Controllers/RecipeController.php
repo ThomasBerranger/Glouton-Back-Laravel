@@ -7,6 +7,7 @@ use App\Http\Resources\RecipeResource;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
@@ -20,7 +21,7 @@ class RecipeController extends Controller
     {
         $user = Auth::user();
 
-        return RecipeResource::collection($user?->recipes()->get());
+        return RecipeResource::collection($user?->recipes()->with('user', 'products', 'productsRecipes')->get());
     }
 
     public function store(StoreRecipeRequest $request): RecipeResource
@@ -28,5 +29,12 @@ class RecipeController extends Controller
         $recipe = Recipe::create($request->validated());
 
         return RecipeResource::make($recipe);
+    }
+
+    public function destroy(Recipe $recipe): Response
+    {
+        $recipe->delete();
+
+        return response()->noContent();
     }
 }

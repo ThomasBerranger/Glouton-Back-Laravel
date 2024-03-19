@@ -35,3 +35,5 @@ it('can delete product related to current user', function () {
     $response->assertNoContent();
     $this->assertModelMissing($product);
 });
+
+// todo: can delete product with related expiration dates
