@@ -36,4 +36,18 @@ it('can delete product related to current user', function () {
     $this->assertModelMissing($product);
 });
 
-// todo: can delete product with related expiration dates
+it('can delete product with related expiration dates', function () {
+    $user = User::factory()->createQuietly();
+
+    Sanctum::actingAs($user);
+
+    $product = Product::factory(['user_id' => $user->id])->hasExpirationDates(2)->createQuietly();
+
+    $this->assertDatabaseCount('expiration_dates', 2);
+
+    $response = $this->delete('/api/products/' . $product->id, ['Accept' => 'application/json']);
+
+    $response->assertNoContent();
+    $this->assertModelMissing($product);
+    $this->assertDatabaseCount('expiration_dates', 0);
+});

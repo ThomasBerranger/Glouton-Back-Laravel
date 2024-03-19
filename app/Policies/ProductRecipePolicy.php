@@ -10,7 +10,7 @@ class ProductRecipePolicy
 {
     public function view(User $user, ProductRecipe $productRecipe): Response
     {
-        return $user->id === $productRecipe->recipe->user->id ? Response::allow() : Response::denyWithStatus(404);
+        return $user->id === $productRecipe->recipe?->user?->id ? Response::allow() : Response::denyWithStatus(404);
     }
 
     public function create(User $user): Response
@@ -38,6 +38,6 @@ class ProductRecipePolicy
 
     public function delete(User $user, ProductRecipe $productRecipe): Response
     {
-        return $user->id === $productRecipe->recipe->user->id ? Response::allow() : Response::denyWithStatus(404);
+        return $user->id === $productRecipe->recipe?->user?->id ? Response::allow() : Response::denyWithStatus(404);
     }
 }

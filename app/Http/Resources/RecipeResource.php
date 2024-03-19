@@ -16,7 +16,7 @@ class RecipeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'available' => $this->isAvailable(),
+            'available' => $this->isAvailable(), // @phpstan-ignore-line
             'user' => UserResource::make($this->user),
             'productsRecipes' => ProductRecipeResource::collection($this->productsRecipes),
         ];

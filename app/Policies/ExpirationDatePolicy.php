@@ -9,16 +9,6 @@ use Illuminate\Auth\Access\Response;
 
 class ExpirationDatePolicy
 {
-    //    public function viewAny(User $user): true
-    //    {
-    //        return true;
-    //    }
-
-    //    public function view(User $user, ExpirationDate $expirationDate): Response
-    //    {
-    //        return $user->id === $expirationDate->product->user->id ? Response::allow() : Response::denyWithStatus(404);
-    //    }
-
     public function create(User $user): Response
     {
         $productId = request()->product_id;
@@ -42,7 +32,6 @@ class ExpirationDatePolicy
         return self::isCurrentUserRelatedToExpirationDateProduct($user, $expirationDate->product);
     }
 
-    // todo: simplifier comme ndans ProductRecipePolicy
     private function isCurrentUserRelatedToExpirationDateProduct(User $currentUser, ?Product $product): Response
     {
         return $product && $currentUser->id === $product->user?->id ? Response::allow() : Response::denyWithStatus(404, 'Product not found.');

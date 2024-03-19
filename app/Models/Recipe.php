@@ -31,8 +31,8 @@ class Recipe extends Model
         return $this->hasMany(ProductRecipe::class);
     }
 
-    public function isAvailable(): bool // todo: unit test
+    public function isAvailable(): bool
     {
-        return $this->products->isNotEmpty() && $this->products()->finished()->get()->isEmpty();
+        return $this->products->isNotEmpty() && $this->products()->finished()->count() <= 0;
     }
 }

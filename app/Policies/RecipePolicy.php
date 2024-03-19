@@ -20,6 +20,6 @@ class RecipePolicy
 
     public function delete(User $user, Recipe $recipe): Response
     {
-        return $user->id === $recipe->user->id ? Response::allow() : Response::denyWithStatus(404);
+        return $user->id === $recipe->user?->id ? Response::allow() : Response::denyWithStatus(404);
     }
 }
