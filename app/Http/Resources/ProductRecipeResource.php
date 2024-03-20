@@ -16,7 +16,7 @@ class ProductRecipeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'product' => ProductResource::make($this->product),
+            'product' => ProductResource::make($this->whenLoaded('product')),
             'recipe' => RecipeResource::make($this->whenLoaded('recipe')),
             'quantity' => $this->quantity,
             'quantity_unity' => $this->quantity_unity,

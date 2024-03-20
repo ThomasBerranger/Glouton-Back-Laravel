@@ -21,7 +21,7 @@ class RecipeController extends Controller
     {
         $user = Auth::user();
 
-        return RecipeResource::collection($user?->recipes()->with('user', 'products', 'productsRecipes')->get());
+        return RecipeResource::collection($user?->recipes()->with('productsRecipes.product')->get());
     }
 
     public function store(StoreRecipeRequest $request): RecipeResource

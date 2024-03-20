@@ -24,6 +24,9 @@ class ProductRecipeController extends Controller
 
     public function show(Request $request, ProductRecipe $productRecipe): ProductRecipeResource
     {
+        // Loaded in ProductRecipePolicy::view() but not required on this route
+        $productRecipe->unsetRelation('recipe');
+
         return ProductRecipeResource::make($productRecipe);
     }
 
