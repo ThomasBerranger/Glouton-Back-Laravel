@@ -52,13 +52,13 @@ it('can delete productsRecipes related to current user but not recipe and produc
 
     // todo: finish this test
 
-//    Sanctum::actingAs($user);
+    //    Sanctum::actingAs($user);
 
     //    dump('user : ' . User::count());
 
-//    $product = Product::factory()->for($user)->createQuietly();
+    //    $product = Product::factory()->for($user)->createQuietly();
 
-//    $productRecipe = ProductRecipe::factory()->for($product)->createQuietly();
+    //    $productRecipe = ProductRecipe::factory()->for($product)->createQuietly();
 
     //    dd('user : ' . User::count(), 'recipe : ' . Product::count(), Product::all()->toArray()); todo: multiple products and recipe created
 
@@ -69,7 +69,7 @@ it('can delete productsRecipes related to current user but not recipe and produc
 
     //    dd('user : ' . User::count(), 'recipe : ' . Recipe::count(), Recipe::all()->toArray());
 
-//    $this->assertDatabaseCount('products', 1);
+    //    $this->assertDatabaseCount('products', 1);
 
     //    $response = $this->delete('/api/products_recipes/' . $productRecipe->id, ['Accept' => 'application/json']);
     //
